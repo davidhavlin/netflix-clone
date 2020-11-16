@@ -17,10 +17,10 @@
 		.search-container {
 			position: relative;
 			transition: all 0.5s ease;
-			width: 15px;
+			width: 20px;
 		}
 		.search-icon {
-			width: 15px;
+			width: 20px;
 		}
 		input {
 			width: 100%;
@@ -37,10 +37,11 @@
 			align-items: center;
 			position: absolute;
 			width: 300px;
+			overflow: hidden;
 		}
 		.search-icon {
 			position: absolute;
-			width: 15px;
+			width: 20px;
 			left: 0.5rem;
 		}
 
