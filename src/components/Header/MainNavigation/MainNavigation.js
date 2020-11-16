@@ -11,17 +11,32 @@ const MainNavigation = () => {
 				</Link>
 			</li>
 			<li>
-				<NavLink exact to="/" activeClassName="active-link">
+				<NavLink
+					className="nav-link"
+					exact
+					to="/"
+					activeClassName="active-link"
+				>
 					Home
 				</NavLink>
 			</li>
 			<li>
-				<NavLink exact to="/movies" activeClassName="active-link">
+				<NavLink
+					className="nav-link"
+					exact
+					to="/movies"
+					activeClassName="active-link"
+				>
 					Movies
 				</NavLink>
 			</li>
 			<li>
-				<NavLink exact to="/mylist" activeClassName="active-link">
+				<NavLink
+					className="nav-link"
+					exact
+					to="/mylist"
+					activeClassName="active-link"
+				>
 					My List
 				</NavLink>
 			</li>

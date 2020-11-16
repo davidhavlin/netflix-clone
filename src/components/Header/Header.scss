@@ -22,30 +22,29 @@
 		background-color: rgb(20, 20, 20);
 	}
 
-	ul {
+	.main-navigation {
 		display: flex;
 		margin: 0;
 		padding: 0;
-	}
-	.main-navigation {
+
 		li:first-child {
 			margin-right: 2rem;
 		}
-	}
+		li {
+			display: block;
+			list-style-type: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-right: 1rem;
 
-	li {
-		display: block;
-		list-style-type: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-right: 1rem;
-
-		&:last-child {
-			margin-right: 0rem;
+			&:last-child {
+				margin-right: 0rem;
+			}
 		}
 	}
-	a {
+
+	.nav-link {
 		text-decoration: none;
 		color: rgba(255, 255, 255, 0.823);
 		display: flex;

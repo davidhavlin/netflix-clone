@@ -58,4 +58,100 @@
 			}
 		}
 	}
+
+	// PROFILE
+	.profile {
+		position: relative;
+		margin-right: 0;
+		cursor: pointer;
+
+		.profile-picture {
+			width: 30px;
+			height: 30px;
+			border-radius: 5px;
+			background-image: url("../../../images/profile.png");
+			background-size: cover;
+			margin-right: 0.5rem;
+		}
+		.profile-arrow {
+			border-style: solid;
+			border-width: 5px 5px 0 5px;
+			border-color: #fff transparent transparent transparent;
+		}
+		.profile-dropdown {
+			position: absolute;
+			background: rgba(0, 0, 0, 0.85);
+			width: 200px;
+			top: 100%;
+			right: 0;
+			margin-top: 1rem;
+			text-align: left;
+			cursor: default;
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				border-style: solid;
+				border-width: 0 10px 10px 10px;
+				border-color: transparent transparent rgb(252, 214, 0)
+					transparent;
+			}
+
+			.dropdown-top {
+				padding: 1rem 0.5rem;
+
+				.profile-link.manage {
+					margin-bottom: 0;
+				}
+			}
+			.kid-section {
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+
+				.kid-picture {
+					width: 30px;
+					height: 30px;
+					border-radius: 5px;
+					background-image: url("../../../images/kids.jpg");
+					background-size: cover;
+					margin-right: 0.5rem;
+				}
+				&:hover .kid-link {
+					text-decoration: underline;
+				}
+			}
+			.dropdown-bottom {
+				font-weight: bold;
+				padding: 1rem 0.5rem;
+
+				.profile-link:first-child,
+				.profile-link:last-child {
+					margin: 0;
+				}
+			}
+
+			.profile-link {
+				a {
+					color: #fff;
+					text-decoration: none;
+					font-size: 0.8em;
+					white-space: nowrap;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+
+				display: block;
+				margin: 0.5rem 0;
+			}
+			.profile-link.kids {
+				padding: 1rem 0.5rem;
+				margin: 0;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.415);
+				border-top: 1px solid rgba(255, 255, 255, 0.415);
+			}
+		}
+	}
 }
