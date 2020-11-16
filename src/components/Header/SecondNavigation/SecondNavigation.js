@@ -2,6 +2,7 @@ import React from "react";
 import "./SecondNavigation.scss";
 import searchIcon from "./search-icon.svg";
 import Search from "./Search";
+import Profile from "./Profile";
 
 const SecondNavigation = () => {
 	return (
@@ -10,9 +11,7 @@ const SecondNavigation = () => {
 			<div className="notification">
 				<a href="#">Notification</a>
 			</div>
-			<div className="profile">
-				<a href="#">Profile</a>
-			</div>
+			<Profile />
 		</div>
 	);
 };
