@@ -1,0 +1,46 @@
+.notification {
+	cursor: pointer;
+	position: relative;
+
+	.bell {
+		width: 20px;
+	}
+	.notifications {
+		font-size: 0.6em;
+		font-weight: bold;
+		color: #fff;
+		position: absolute;
+		top: -7px;
+		right: -2px;
+		background: red;
+		border-radius: 2px;
+		padding: 0.15rem;
+	}
+
+	.notification-dropdown {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		width: 300px;
+		height: 300px;
+		overflow-y: scroll;
+		background: rgba(0, 0, 0, 0.85);
+		margin-top: 1rem;
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: -9px;
+			right: 24px;
+			border-style: solid;
+			border-width: 0 8px 8px 8px;
+			border-color: transparent transparent #000000 transparent;
+		}
+
+		.notify {
+			color: #fff;
+			.notify-bg {
+			}
+		}
+	}
+}
