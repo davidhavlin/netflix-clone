@@ -21,7 +21,7 @@
 		position: absolute;
 		background: rgba(0, 0, 0, 0.85);
 		width: 200px;
-		top: 100%;
+		top: 113%;
 		right: 0;
 		margin-top: 1rem;
 		text-align: left;
@@ -30,11 +30,11 @@
 		&::after {
 			content: "";
 			position: absolute;
-			top: -9px;
+			top: -11px;
 			right: 24px;
 			border-style: solid;
 			border-width: 0 8px 8px 8px;
-			border-color: transparent transparent #000000 transparent;
+			border-color: transparent transparent #e7e7e7 transparent;
 		}
 
 		.dropdown-top {

@@ -5,7 +5,7 @@
 	.bell {
 		width: 20px;
 	}
-	.notifications {
+	.notifications-count {
 		font-size: 0.6em;
 		font-weight: bold;
 		color: #fff;
@@ -16,30 +16,57 @@
 		border-radius: 2px;
 		padding: 0.15rem;
 	}
-
 	.notification-dropdown {
 		position: absolute;
-		top: 100%;
+		top: 133%;
 		right: 0;
-		width: 300px;
-		height: 300px;
+		&::after {
+			content: "";
+			position: absolute;
+			top: 5px;
+			right: 2px;
+			border-style: solid;
+			border-width: 0 8px 8px 8px;
+			border-color: transparent transparent #e7e7e7 transparent;
+		}
+	}
+	.notifications {
+		width: 400px;
+		height: 450px;
 		overflow-y: scroll;
 		background: rgba(0, 0, 0, 0.85);
 		margin-top: 1rem;
 
-		&::after {
-			content: "";
-			position: absolute;
-			top: -9px;
-			right: 24px;
-			border-style: solid;
-			border-width: 0 8px 8px 8px;
-			border-color: transparent transparent #000000 transparent;
-		}
-
 		.notify {
-			color: #fff;
+			display: flex;
+			justify-content: flex-start;
+			text-align: left;
+			color: rgba(255, 255, 255, 0.666);
+			padding: 1rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.279);
+
 			.notify-bg {
+				width: 110px;
+				height: 60px;
+				border-radius: 5px;
+				background: rgb(204, 203, 203);
+				margin-right: 1rem;
+			}
+			.notify-article {
+				.notify-title {
+					font-size: 1.2em;
+					font-weight: normal;
+					margin: 0;
+				}
+				.notify-text {
+					color: #a9a9a9bb;
+					font-size: 0.7em;
+					margin-top: 0.4rem;
+				}
+			}
+			&:hover {
+				background: #000;
+				color: #fff;
 			}
 		}
 	}

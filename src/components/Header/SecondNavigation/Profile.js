@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Profile.scss";
 
 const Profile = () => {
-	const [visibleMenu, setVisibleMenu] = useState(false);
+	const [visibleMenu, setVisibleMenu] = useState(true);
 	let timeout = null;
 
 	const showMenu = () => {
