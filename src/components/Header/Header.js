@@ -7,10 +7,12 @@ const Header = () => {
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
-		window.addEventListener("scroll", () => {
-			window.scrollY > 0 ? setScrolled(true) : setScrolled(false);
-		});
+		window.addEventListener("scroll", howMuchScrolled);
 	}, []);
+
+	const howMuchScrolled = () => {
+		window.scrollY > 0 ? setScrolled(true) : setScrolled(false);
+	};
 
 	return (
 		<header className="navigation-header">

@@ -38,7 +38,7 @@ const Notification = () => {
 					<div className="notifications">
 						{notifications.map((notify) => {
 							return (
-								<div className="notify">
+								<div key={notify.id} className="notify">
 									<div className="notify-bg"></div>
 									<section className="notify-article">
 										<h3 className="notify-title">

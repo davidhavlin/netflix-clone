@@ -1,0 +1,126 @@
+.netflix-originals {
+	padding: 3rem;
+	padding-top: 0;
+	margin-top: -8em;
+	position: relative;
+	z-index: 1;
+
+	.originals-title {
+		font-size: 1.4em;
+	}
+
+	.originals-carousel {
+		width: fit-content;
+		display: flex;
+
+		.movie {
+			position: relative;
+			height: 400px;
+			width: 225px;
+			background: #fff;
+			margin-right: 0.3rem;
+			border-radius: 5px;
+			background-size: cover;
+			background-position: center;
+			transition: transform 1s ease;
+			overflow: hidden;
+
+			.hovered-show {
+				position: absolute;
+				display: flex;
+				align-items: flex-end;
+				width: 100%;
+				height: 100%;
+				background-size: cover;
+				background-position: center;
+				padding: 0.5rem;
+				opacity: 0;
+				// display: none;
+				transition: opacity 1s ease;
+
+				&::after {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: rgba(0, 0, 0, 0.2);
+					z-index: 0;
+				}
+
+				.content-hovered {
+					width: 100%;
+					position: relative;
+					z-index: 10;
+
+					.buttons-section {
+						display: flex;
+						justify-content: space-between;
+
+						div {
+							display: flex;
+						}
+					}
+					button {
+						font-size: 1.3em;
+						width: 45px;
+						height: 45px;
+						margin-right: 0.5rem;
+						border: none;
+						border-radius: 50%;
+						cursor: pointer;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+
+						&:hover {
+							background: rgba(148, 148, 148, 0.571);
+						}
+					}
+					.btn-add {
+						color: #fff;
+						background: transparent;
+						border: 1px solid #fff;
+					}
+					.btn-info {
+						color: #fff;
+						background: rgba(99, 99, 99, 0.571);
+						margin-right: 0;
+					}
+
+					.text-section {
+						h4 {
+							margin: 0.5rem 0;
+							font-weight: bold;
+						}
+						p {
+							font-size: 0.8em;
+							color: rgb(5, 193, 74);
+						}
+						.age-res {
+							color: #fff;
+							font-size: 0.9em;
+							padding: 0.05rem;
+							border: 1px solid #fff;
+							margin: 0 0.3rem;
+						}
+						span {
+							color: #fff;
+						}
+					}
+				}
+			}
+
+			&:hover {
+				transform: scale(1.2);
+				z-index: 100;
+
+				.hovered-show {
+					// display: block;
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
