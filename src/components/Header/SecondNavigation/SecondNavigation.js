@@ -4,11 +4,11 @@ import Search from "./Search";
 import Notification from "./Notification";
 import Profile from "./Profile";
 
-const SecondNavigation = () => {
+const SecondNavigation = ({ movies }) => {
 	return (
 		<div className="second-navigation">
 			<Search />
-			<Notification />
+			<Notification movies={movies} />
 			<Profile />
 		</div>
 	);

@@ -1,51 +1,46 @@
-import React, { useState, useEffect } from "react";
-import Movie from "../Home/Movie";
+import React, { useState, useEffect, useContext } from "react";
 import RandomMovie from "../Home/RandomMovie";
 import NetflixOriginals from "../Home/NetflixOriginals";
+import MovieCarousel from "../Home/MovieCarousel";
+import { MovieContext } from "../App/MovieContext";
+import "./Home.scss";
 
-const API_KEY = process.env.REACT_APP_TMDB_KEY;
-const base_url = "https://api.themoviedb.org/3/movie/76341?api_key=";
-const top_movies = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
-const top_shows = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
+// const API_KEY = process.env.REACT_APP_TMDB_KEY;
+// const base_url = "https://api.themoviedb.org/3/movie/76341?api_key=";
+// const top_movies = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
+// const top_shows = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
 const Home = () => {
-	const [movies, setMovies] = useState([]);
-	const [shows, setShows] = useState([]);
-	const [highlightMovie, setHighlightMovie] = useState(null);
+	const { top_rated_movies, top_rated_shows } = useContext(MovieContext);
+	const [topMovies, setTopMovies] = top_rated_movies;
+	const [topShows, setTopShows] = top_rated_shows;
 
-	useEffect(() => {
-		fetch(top_movies)
-			.then((res) => res.json())
-			.then((data) => {
-				setMovies(data.results);
-				randomMovie(data.results);
-			});
-		// fetch(top_shows)
-		// 	.then((res) => res.json())
-		// 	.then((data) => setShows(data.results));
-		// console.log(shows);
-		fetchShows();
-	}, []);
+	useEffect(() => {}, []);
 
-	const randomMovie = (array) => {
-		if (!movies) return;
-		let randomNumber = Math.floor(Math.random() * array.length);
-		setHighlightMovie(array[randomNumber]);
-	};
-
-	const fetchShows = async () => {
-		let response = await fetch(top_shows);
-		let resultShows = await response.json();
-		setShows(resultShows.results);
-	};
+	// const randomMovie = (array) => {
+	// 	if (!movies) return;
+	// 	let randomNumber = Math.floor(Math.random() * array.length);
+	// 	setHighlightMovie(array[randomNumber]);
+	// };
 
 	return (
-		<div>
-			<RandomMovie movie={highlightMovie} />
-			<NetflixOriginals shows={shows} />
-			{/* <TrendingNow />
-            <MyList /> */}
-		</div>
+		<main>
+			<RandomMovie movie={topMovies[5]} />
+			{/* <NetflixOriginals shows={topShows} /> */}
+			<section className="carousel-section">
+				<MovieCarousel
+					title="Netflix Originals"
+					movies={topShows}
+					big={true}
+				/>
+				<MovieCarousel
+					title="Trending Now"
+					movies={topMovies}
+					big={false}
+				/>
+				<MovieCarousel title="My List" movies={topMovies} big={false} />
+			</section>
+		</main>
 	);
 };
 

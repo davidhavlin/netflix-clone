@@ -31,11 +31,11 @@ const ShowsCarousel = ({ shows }) => {
 											<i className="fas fa-play"></i>
 										</button>
 										<button className="btn-add">
-											<i class="fas fa-plus"></i>
+											<i className="fas fa-plus"></i>
 										</button>
 									</div>
 									<button className="btn-info">
-										<i class="fas fa-chevron-down"></i>
+										<i className="fas fa-chevron-down"></i>
 									</button>
 								</section>
 								<section className="text-section">
