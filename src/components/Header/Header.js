@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Header.scss";
 import MainNavigation from "./MainNavigation/MainNavigation";
 import SecondNavigation from "./SecondNavigation/SecondNavigation";
+import { MovieContext } from "../App/MovieContext";
 
 const Header = () => {
+	const { upcoming_movies } = useContext(MovieContext);
+	const [upcomingMovies, setUpcomingMovies] = upcoming_movies;
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
@@ -18,7 +21,7 @@ const Header = () => {
 		<header className="navigation-header">
 			<nav className={scrolled ? "sticky-nav" : ""}>
 				<MainNavigation />
-				<SecondNavigation />
+				<SecondNavigation movies={upcomingMovies} />
 			</nav>
 		</header>
 	);
