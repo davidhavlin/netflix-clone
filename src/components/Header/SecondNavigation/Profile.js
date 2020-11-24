@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { CSSTransition } from "react-transition-group";
+
 import "./Profile.scss";
 
 const Profile = () => {
 	const [visibleMenu, setVisibleMenu] = useState(true);
 	let timeout = null;
+
+	useEffect(() => {
+		setVisibleMenu(false);
+	}, []);
 
 	const showMenu = () => {
 		clearTimeout(timeout);
@@ -23,7 +29,12 @@ const Profile = () => {
 		>
 			<div className="profile-picture"></div>
 			<div className="profile-arrow"></div>
-			{visibleMenu && (
+			<CSSTransition
+				classNames="profile"
+				in={visibleMenu}
+				appear={visibleMenu}
+				timeout={200}
+			>
 				<div className="profile-dropdown">
 					<div className="dropdown-top">
 						<div className="kid-section">
@@ -53,7 +64,7 @@ const Profile = () => {
 						</li>
 					</ul>
 				</div>
-			)}
+			</CSSTransition>
 		</div>
 	);
 };

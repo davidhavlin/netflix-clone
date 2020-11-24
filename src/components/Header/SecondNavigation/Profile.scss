@@ -92,4 +92,25 @@
 			border-top: 1px solid rgba(255, 255, 255, 0.415);
 		}
 	}
+
+	.profile-enter {
+		opacity: 0;
+	}
+	.profile-enter-active,
+	.profile-enter-done {
+		pointer-events: initial;
+		opacity: 1;
+		transition: opacity 200ms;
+	}
+	.profile-exit {
+		opacity: 1;
+	}
+	.profile-exit-active {
+		opacity: 0;
+		transition: opacity 200ms;
+	}
+
+	.profile-exit-done {
+		display: none;
+	}
 }

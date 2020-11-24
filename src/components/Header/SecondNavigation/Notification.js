@@ -1,13 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import notificationBell from "./bell-icon.svg";
 import "./Notification.scss";
+import { CSSTransition } from 'react-transition-group';
+
 
 const imgurl = "https://image.tmdb.org/t/p/w500";
 
-const Notification = ({ movies }) => {
-	const [visibleNotifications, setVisibleNotifications] = useState(true);
-	let timeout = null;
 
+const Notification = ({ movies }) => {
+    const [visibleNotifications, setVisibleNotifications] = useState(false);
+    let timeout = null;
+    useEffect(() => {
+        setVisibleNotifications(false)
+    }, [])
 	const showNotifications = () => {
 		setVisibleNotifications(true);
 		clearTimeout(timeout);
@@ -16,18 +21,19 @@ const Notification = ({ movies }) => {
 		timeout = setTimeout(() => {
 			setVisibleNotifications(false);
 		}, 300);
-	};
+    };
 
 	return (
 		<div
 			className="notification"
-			onMouseEnter={showNotifications}
-			onMouseLeave={hideNotifications}
+			onMouseEnter={()=>{showNotifications()}}
+            onMouseLeave={()=>{hideNotifications()}}
 		>
 			<img className="bell" src={notificationBell} alt="notification" />
 			<div className="notifications-count">5</div>
-			{visibleNotifications && (
-				<div className="notification-dropdown">
+            
+            <CSSTransition classNames="notify" in={visibleNotifications} appear={visibleNotifications} timeout={200} >
+				<div className="notification-dropdown" >
 					<div className="notifications">
 						{movies &&
 							movies.map((movie) => {
@@ -54,7 +60,7 @@ const Notification = ({ movies }) => {
 							})}
 					</div>
 				</div>
-			)}
+            </CSSTransition>
 		</div>
 	);
 };

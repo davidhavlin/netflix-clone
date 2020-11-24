@@ -6,15 +6,19 @@
 		width: 20px;
 	}
 	.notifications-count {
-		font-size: 0.6em;
+		font-size: 0.7em;
 		font-weight: bold;
 		color: #fff;
 		position: absolute;
-		top: -7px;
-		right: -2px;
+		top: -5px;
+		right: -3px;
 		background: red;
-		border-radius: 2px;
-		padding: 0.15rem;
+		border-radius: 50%;
+		width: 16px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 16px;
 	}
 	.notification-dropdown {
 		position: absolute;
@@ -29,6 +33,25 @@
 			border-width: 0 8px 8px 8px;
 			border-color: transparent transparent #e7e7e7 transparent;
 		}
+	}
+	.notify-enter {
+		opacity: 0;
+	}
+	.notify-enter-active,
+	.notify-enter-done {
+		opacity: 1;
+		transition: opacity 200ms;
+	}
+	.notify-exit {
+		opacity: 1;
+	}
+	.notify-exit-active {
+		opacity: 0;
+		transition: opacity 200ms;
+	}
+
+	.notify-exit-done {
+		display: none;
 	}
 	.notifications {
 		width: 400px;
