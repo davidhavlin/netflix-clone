@@ -69,13 +69,15 @@
 			border-bottom: 1px solid rgba(255, 255, 255, 0.279);
 
 			.notify-bg {
-				width: 110px;
+				width: 30%;
 				height: 60px;
 				border-radius: 5px;
-				background: rgb(204, 203, 203);
+				background: #cccbcb;
+				background-size: cover;
 				margin-right: 1rem;
 			}
 			.notify-article {
+				width: 70%;
 				.notify-title {
 					font-size: 1.2em;
 					font-weight: normal;

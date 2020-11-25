@@ -28,6 +28,10 @@
 		margin: 0;
 		padding: 0;
 
+		.logo {
+			display: flex;
+		}
+
 		li:first-child {
 			margin-right: 2rem;
 		}

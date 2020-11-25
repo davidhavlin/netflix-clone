@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import notificationBell from "./bell-icon.svg";
 import "./Notification.scss";
-import { CSSTransition } from 'react-transition-group';
-
+import { CSSTransition } from "react-transition-group";
 
 const imgurl = "https://image.tmdb.org/t/p/w500";
 
+const Notification = ({ movies, showProfile, setShowNotify }) => {
+	const [visibleNotifications, setVisibleNotifications] = useState(true);
+	const [notifyVisited, setNotifyVisited] = useState(false);
+	const notify = useRef(null);
+	let timeout = null;
 
-const Notification = ({ movies }) => {
-    const [visibleNotifications, setVisibleNotifications] = useState(false);
-    let timeout = null;
-    useEffect(() => {
-        setVisibleNotifications(false)
-    }, [])
+	useEffect(() => {
+		setVisibleNotifications(false);
+	}, []);
+
+	useEffect(() => {
+		if (showProfile) {
+			setShowNotify(false);
+			setVisibleNotifications(false);
+		}
+	}, [showProfile, setShowNotify]);
+
 	const showNotifications = () => {
+		setShowNotify(true);
+		setNotifyVisited(true);
 		setVisibleNotifications(true);
 		clearTimeout(timeout);
 	};
@@ -21,19 +32,35 @@ const Notification = ({ movies }) => {
 		timeout = setTimeout(() => {
 			setVisibleNotifications(false);
 		}, 300);
-    };
+	};
+
+	const shorterOverview = (string) => {
+		return string.length > 100 ? string.substring(0, 100) + "..." : string;
+	};
 
 	return (
 		<div
 			className="notification"
-			onMouseEnter={()=>{showNotifications()}}
-            onMouseLeave={()=>{hideNotifications()}}
+			onMouseEnter={() => {
+				showNotifications();
+			}}
+			onMouseLeave={() => {
+				hideNotifications();
+			}}
 		>
 			<img className="bell" src={notificationBell} alt="notification" />
-			<div className="notifications-count">5</div>
-            
-            <CSSTransition classNames="notify" in={visibleNotifications} appear={visibleNotifications} timeout={200} >
-				<div className="notification-dropdown" >
+			{!notifyVisited && (
+				<div className="notifications-count">{movies.length}</div>
+			)}
+
+			<CSSTransition
+				classNames="notify"
+				in={visibleNotifications}
+				appear={visibleNotifications}
+				timeout={200}
+				nodeRef={notify}
+			>
+				<div className="notification-dropdown" ref={notify}>
 					<div className="notifications">
 						{movies &&
 							movies.map((movie) => {
@@ -52,7 +79,9 @@ const Notification = ({ movies }) => {
 												{movie.title}
 											</h3>
 											<p className="notify-text">
-												{movie.overview}
+												{shorterOverview(
+													movie.overview
+												)}
 											</p>
 										</section>
 									</div>
@@ -60,7 +89,7 @@ const Notification = ({ movies }) => {
 							})}
 					</div>
 				</div>
-            </CSSTransition>
+			</CSSTransition>
 		</div>
 	);
 };

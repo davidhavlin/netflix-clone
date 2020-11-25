@@ -6,7 +6,7 @@ const MainNavigation = () => {
 	return (
 		<ul className="main-navigation">
 			<li>
-				<Link to="/">
+				<Link to="/" className="logo">
 					<img src={Netflix} className="netflix-logo" alt="logo" />
 				</Link>
 			</li>

@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 
 import "./Profile.scss";
 
-const Profile = () => {
+const Profile = ({ showNotify, setShowProfile }) => {
 	const [visibleMenu, setVisibleMenu] = useState(true);
+	const profile = useRef(null);
 	let timeout = null;
 
 	useEffect(() => {
 		setVisibleMenu(false);
 	}, []);
 
+	useEffect(() => {
+		if (showNotify) {
+			setShowProfile(false);
+			setVisibleMenu(false);
+		}
+	}, [showNotify, setShowProfile]);
+
 	const showMenu = () => {
 		clearTimeout(timeout);
 		setVisibleMenu(true);
+		setShowProfile(true);
 	};
 	const hideMenu = () => {
 		timeout = setTimeout(() => {
@@ -34,8 +43,9 @@ const Profile = () => {
 				in={visibleMenu}
 				appear={visibleMenu}
 				timeout={200}
+				nodeRef={profile}
 			>
-				<div className="profile-dropdown">
+				<div className="profile-dropdown" ref={profile}>
 					<div className="dropdown-top">
 						<div className="kid-section">
 							<div className="kid-picture"></div>
