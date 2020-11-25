@@ -20,14 +20,30 @@ const MovieCarousel = ({ title, movies, big }) => {
 		setCounter(counter - 1);
 	};
 
+	const firstOrLastItem = (index) => {
+		let firstItems = [];
+		let lastItems = [];
+		for (let i = 0; i < movies.length; i += 5) {
+			firstItems.push(i);
+			lastItems.push(i - 1);
+		}
+		if (firstItems.includes(index)) {
+			return "slide-item first-item";
+		} else if (lastItems.includes(index)) {
+			return "slide-item last-item";
+		} else {
+			return "slide-item";
+		}
+	};
+
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
 			<h3 className="section-title">{title}</h3>
 
 			<div className="carousel" ref={carousel}>
 				{movies &&
-					movies.map((movie) => (
-						<div className="slide-item" key={movie.id}>
+					movies.map((movie, index) => (
+						<div className={firstOrLastItem(index)} key={movie.id}>
 							<div
 								className="movie"
 								style={{
@@ -45,29 +61,41 @@ const MovieCarousel = ({ title, movies, big }) => {
 									}}
 								>
 									<div className="content-hovered">
-										<section className="buttons-section">
-											<div>
-												<button className="btn-play">
-													<i className="fas fa-play"></i>
+										<div className="content">
+											<section className="buttons-section">
+												<div>
+													<button className="btn-play">
+														<i className="fas fa-play"></i>
+													</button>
+													<button className="btn-add">
+														<span className="icon-tooltip">
+															Add to My List
+														</span>
+														<i className="fas fa-plus"></i>
+													</button>
+												</div>
+												<button className="btn-info">
+													<span className="icon-tooltip">
+														More Info
+													</span>
+
+													<i className="fas fa-chevron-down"></i>
 												</button>
-												<button className="btn-add">
-													<i className="fas fa-plus"></i>
-												</button>
-											</div>
-											<button className="btn-info">
-												<i className="fas fa-chevron-down"></i>
-											</button>
-										</section>
-										<section className="text-section">
-											<h4>{movie.name || movie.title}</h4>
-											<p>
-												Popularity: {movie.vote_average}
-												<span className="age-res">
-													16+
-												</span>{" "}
-												<span>Limited Series</span>
-											</p>
-										</section>
+											</section>
+											<section className="text-section">
+												<h4>
+													{movie.name || movie.title}
+												</h4>
+												<p>
+													Popularity:{" "}
+													{movie.vote_average}
+													<span className="age-res">
+														16+
+													</span>{" "}
+													<span>Limited Series</span>
+												</p>
+											</section>
+										</div>
 									</div>
 								</div>
 							</div>

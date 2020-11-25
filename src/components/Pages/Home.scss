@@ -66,6 +66,17 @@
 			display: inline-block;
 			padding: 0 2px;
 		}
+		.slide-item.last-item {
+			.movie {
+				transform-origin: right;
+			}
+		}
+		.slide-item.first-item {
+			.movie {
+				transform-origin: left;
+			}
+		}
+
 		.movie {
 			position: relative;
 			width: 100%;
@@ -116,6 +127,7 @@
 						}
 					}
 					button {
+						position: relative;
 						font-size: 1.3em;
 						width: 45px;
 						height: 45px;
@@ -127,8 +139,35 @@
 						justify-content: center;
 						align-items: center;
 
+						.icon-tooltip {
+							background: #fff;
+							color: #000;
+							position: absolute;
+							top: -110%;
+							padding: 0.3rem 0.5rem;
+							font-size: 0.9em;
+							border-radius: 5px;
+							font-weight: bold;
+							opacity: 0;
+							transition: opacity 0.2s ease;
+
+							&::after {
+								content: " ";
+								position: absolute;
+								top: 99%;
+								left: 50%;
+								margin-left: -5px;
+								border: 5px solid transparent;
+								border-top-color: #fff;
+							}
+						}
+
 						&:hover {
 							background: rgba(148, 148, 148, 0.571);
+
+							.icon-tooltip {
+								opacity: 1;
+							}
 						}
 					}
 					.btn-add {
@@ -139,6 +178,7 @@
 					.btn-info {
 						color: #fff;
 						background: rgba(99, 99, 99, 0.571);
+						border: 1px solid transparent;
 						margin-right: 0;
 					}
 
@@ -172,6 +212,56 @@
 				.hovered-show {
 					// display: block;
 					opacity: 1;
+				}
+			}
+		}
+	}
+	.small-version {
+		.movie {
+			overflow: visible;
+			transition: transform 0.4s ease;
+
+			&:hover {
+				transform: scale(1.2) translateY(-41px);
+			}
+
+			.hovered-show {
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+				box-shadow: 1px 1px 14px 5px rgba(0, 0, 0, 0.3);
+				.content-hovered {
+					width: 100%;
+					position: absolute;
+					bottom: -67%;
+					left: 0;
+					z-index: 10;
+					background: #141414;
+					box-shadow: 1px 1px 14px 5px rgba(0, 0, 0, 0.3);
+					border-bottom-right-radius: 5px;
+					border-bottom-left-radius: 5px;
+					z-index: 10;
+
+					.content {
+						transform: scale(0.9);
+					}
+					.buttons-section {
+						margin-top: 0.3rem;
+					}
+					button {
+						font-size: 0.9em;
+						width: 30px;
+						height: 30px;
+					}
+
+					.text-section p {
+						padding: 0.5rem 0 0.5rem 0;
+						margin: 0;
+						font-size: 0.7em;
+					}
+					.text-section h4 {
+						font-size: 0.9em;
+						margin: 0.5rem 0 0 0;
+					}
 				}
 			}
 		}

@@ -16,6 +16,7 @@ export const MovieProvider = (props) => {
 			.then((res) => res.json())
 			.then((data) => {
 				setTopMovies(data.results);
+				console.log(data.results);
 			});
 	}, []);
 
@@ -33,7 +34,12 @@ export const MovieProvider = (props) => {
 		fetch(upcoming_movies)
 			.then((res) => res.json())
 			.then((data) => {
-				setUpcomingMovies(data.results);
+				let num = Math.floor(
+					Math.random() * (data.results.length - 4) + 4
+				);
+				let arr = data.results;
+				arr.length = num;
+				setUpcomingMovies(arr);
 			});
 	}, []);
 
