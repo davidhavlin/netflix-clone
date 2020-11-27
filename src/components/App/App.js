@@ -1,6 +1,7 @@
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "./Main";
+import Footer from "../Footer/Footer";
 import { MovieProvider } from "../App/MovieContext";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
 			<div className="App">
 				<Header />
 				<Main />
+				<Footer />
 			</div>
 		</MovieProvider>
 	);

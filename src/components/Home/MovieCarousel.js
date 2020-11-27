@@ -1,11 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
+import CarouselCounter from "./CarouselCounter";
+import { debounce } from "lodash-es";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
-const MovieCarousel = ({ title, movies, big }) => {
+const MovieCarousel = ({ title, movies, setMovies, big }) => {
 	const [clicked, setClicked] = useState(false);
 	// const [transformLength, setTransformLength] = useState(-100);
 	const carousel = useRef(null);
+	const [realCount, setRealCount] = useState(0);
+	const [firstTime, setFirstTime] = useState(true);
+	const [counter, setCounter] = useState(0);
+	const [reRender, setReRender] = useState(false);
 
 	const [transitioning, setTransitioning] = useState(false);
 	useEffect(() => {
@@ -23,45 +29,87 @@ const MovieCarousel = ({ title, movies, big }) => {
 		if (window.innerWidth > 1000) {
 			setItemsVisible(5);
 			set_width_of_item(20);
+		} else if (window.innerWidth < 600) {
+			setItemsVisible(2);
+			set_width_of_item(50);
 		} else if (window.innerWidth < 800) {
 			setItemsVisible(3);
-			set_width_of_item(33.3);
+			set_width_of_item(33);
 		} else if (window.innerWidth < 1000) {
 			setItemsVisible(4);
 			set_width_of_item(25);
 		}
-
-		window.addEventListener("resize", () => {
-			if (window.innerWidth > 1000) {
-				setItemsVisible(5);
-				set_width_of_item(20);
-				carousel.current.style.transform = `translateX(${
-					-100 * (counter + 1) - width_of_item
-				}%)`;
-			} else if (window.innerWidth < 800) {
-				setItemsVisible(3);
-				set_width_of_item(33.3);
-				carousel.current.style.transform = `translateX(${
-					-100 * (counter + 1) - width_of_item
-				}%)`;
-			} else if (window.innerWidth < 1000) {
-				setItemsVisible(4);
-				set_width_of_item(25);
-				carousel.current.style.transform = `translateX(${
-					-100 * (counter + 1) - width_of_item
-				}%)`;
-			}
+		window.addEventListener("resize", debounce(handleResizeEvent, 300), {
+			once: true,
 		});
-	}, []);
+	}, [counter, firstTime, reRender]);
 
-	const [counter, setCounter] = useState(0);
-	const [firstTime, setFirstTime] = useState(true);
+	const handleResizeEvent = () => {
+		console.log("resize wtf", counter);
+		// 	if (window.innerWidth > 1000) {
+		// 		setItemsVisible(5);
+		// 		set_width_of_item(20);
+		// 		carousel.current.style.transform = `translateX(${
+		// 			-100 * (counter + 1) - width_of_item
+		// 		}%)`;
+		// 	} else if (window.innerWidth < 800) {
+		// 		setItemsVisible(3);
+		// 		set_width_of_item(33.3);
+		// 		carousel.current.style.transform = `translateX(${
+		// 			-100 * (counter + 1) - width_of_item
+		// 		}%)`;
+		// 	} else if (window.innerWidth < 1000) {
+		// 		setItemsVisible(4);
+		// 		set_width_of_item(25);
+		// 		carousel.current.style.transform = `translateX(${
+		// 			-100 * (counter + 1) - width_of_item
+		// 		}%)`;
+		// 	}
+		if (window.innerWidth > 1000) {
+			doSomething(5, 20);
+		} else if (window.innerWidth < 600) {
+			doSomething(2, 50);
+		} else if (window.innerWidth < 800) {
+			doSomething(3, 33);
+		} else if (window.innerWidth < 1000) {
+			doSomething(4, 25);
+		}
+	};
+	const doSomething = (items, itemWidth) => {
+		// carousel.current.style.transform = `translateX(${-100 - itemWidth}%)`;
+		// if (counter === 0 && firstTime) {
+		// 	console.log();
+		// 	carousel.current.style.transform = `translateX(${0}%)`;
+		// } else {
+		// 	console.log("toto nie?");
+		// 	carousel.current.style.transform = `translateX(${
+		// 		-100 * (counter + 1) - width_of_item
+		// 	}%)`;
+		// }
+		// setReRender(true);
+		setItemsVisible(items);
+		set_width_of_item(itemWidth);
+		movies.length = 20;
+		// setReRender(false);
+	};
+	useEffect(() => {
+		console.log(itemsVisible);
+	}, [itemsVisible]);
+
 	useEffect(() => {
 		const div = carousel.current;
 		// prettier-ignore
 		firstTime 
             ? div.style.transform = `translateX(${ -100 * counter }%)`
             : div.style.transform = `translateX(${ -100 * (counter + 1) - width_of_item }%)`;
+
+		if (counter === -1) {
+			setRealCount(Math.floor(movies.length / itemsVisible - 1));
+		} else if (counter === Math.floor(movies.length / itemsVisible)) {
+			setRealCount(0);
+		} else {
+			setRealCount(counter);
+		}
 	}, [counter]);
 
 	const firstSlide = () => {
@@ -96,7 +144,6 @@ const MovieCarousel = ({ title, movies, big }) => {
 	const handleTransitionEnd = (e) => {
 		if (e.target.id !== "carousel") return;
 		let lastItem = Math.floor(movies.length / itemsVisible);
-		console.log(lastItem);
 		setTransitioning(false);
 		carousel.current.style.pointerEvents = "initial";
 
@@ -111,17 +158,19 @@ const MovieCarousel = ({ title, movies, big }) => {
 
 	const teleportTo = (where) => {
 		const parent = carousel.current;
-		parent.style.transition = "none";
 		if (where === "start") {
 			setCounter(0);
+			parent.style.transition = "none";
 			parent.style.transform = `translateX(${
 				-100 * (counter + 1) - width_of_item
 			}%)`;
 		} else {
+			parent.style.transition = "none";
 			parent.style.transform = `translateX(${
 				-100 * (counter + 1) - width_of_item
 			}%)`;
-			setCounter(movies.length / itemsVisible - 1);
+			setCounter(Math.floor(movies.length / itemsVisible - 1));
+			// console.log(movies.length / itemsVisible - 1);
 		}
 		setTimeout(() => {
 			parent.style.transition = "transform 1s ease";
@@ -135,6 +184,7 @@ const MovieCarousel = ({ title, movies, big }) => {
 	};
 	const slideLeft = () => {
 		if (transitioning) return;
+
 		setCounter(counter - 1);
 	};
 
@@ -161,9 +211,14 @@ const MovieCarousel = ({ title, movies, big }) => {
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
 			<h3 className="section-title">{title}</h3>
+			<CarouselCounter
+				number={Math.floor(movies.length / itemsVisible)}
+				counter={realCount}
+			/>
 
 			<div
 				className="carousel"
+				className={reRender ? "carousel nieco" : "carousel"}
 				id="carousel"
 				ref={carousel}
 				onTransitionEnd={handleTransitionEnd}
@@ -234,6 +289,7 @@ const MovieCarousel = ({ title, movies, big }) => {
 						</div>
 					))}
 			</div>
+
 			{clicked && (
 				<div
 					className="prev-arrow"

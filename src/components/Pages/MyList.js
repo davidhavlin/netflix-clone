@@ -9,7 +9,12 @@ const MyList = () => {
 	return (
 		<section className="carousel-section">
 			<h1>MyList stranka</h1>
-			<MovieCarousel title="My List" movies={topShows} big={false} />
+			<MovieCarousel
+				title="My List"
+				movies={topShows}
+				setMovies={setTopShows}
+				big={false}
+			/>
 		</section>
 	);
 };

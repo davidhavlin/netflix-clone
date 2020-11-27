@@ -31,14 +31,21 @@ const Home = () => {
 				<MovieCarousel
 					title="Netflix Originals"
 					movies={topShows}
+					setMovies={setTopShows}
 					big={true}
 				/>
 				<MovieCarousel
 					title="Trending Now"
 					movies={topMovies}
+					setMovies={setTopMovies}
 					big={false}
 				/>
-				<MovieCarousel title="My List" movies={topMovies} big={false} />
+				<MovieCarousel
+					title="My List"
+					movies={topMovies}
+					setMovies={setTopMovies}
+					big={false}
+				/>
 			</section>
 		</main>
 	);

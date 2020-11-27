@@ -16,7 +16,7 @@ export const MovieProvider = (props) => {
 			.then((res) => res.json())
 			.then((data) => {
 				setTopMovies(data.results);
-				console.log(data.results);
+				// console.log(data.results);
 			});
 	}, []);
 

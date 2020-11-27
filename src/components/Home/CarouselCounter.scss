@@ -1,0 +1,17 @@
+.movies-section {
+	.counter {
+		position: absolute;
+		display: flex;
+		right: 3rem;
+		top: 1rem;
+		.cube {
+			width: 20px;
+			height: 3px;
+			background: rgba(255, 255, 255, 0.53);
+			margin-right: 0.2rem;
+		}
+		.cube.active {
+			background: rgb(255, 255, 255);
+		}
+	}
+}
