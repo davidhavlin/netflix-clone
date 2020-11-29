@@ -117,7 +117,6 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 			if (firstTime) {
 				div.style.transform = `translateX(${-100 * counter}%)`;
 			} else {
-				console.log("DOPICE");
 				if (counter === lastItem) {
 					div.style.transform = `translateX(${
 						-100 * (counter + 1) + 1
