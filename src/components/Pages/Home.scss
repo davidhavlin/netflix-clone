@@ -60,7 +60,7 @@
 	}
 	.carousel {
 		white-space: nowrap;
-		transition: transform 1s ease;
+		transition: transform 0.6s ease;
 
 		.slide-item {
 			width: 20%;
@@ -319,7 +319,11 @@
 	.icon-tooltip::after {
 	margin-left: 10px !important;
 }
-
+@media (min-width: 1400px) {
+	.carousel-section .carousel .slide-item {
+		width: 16.7%;
+	}
+}
 @media (max-width: 1000px) {
 	.carousel-section .carousel .slide-item {
 		width: 25%;
