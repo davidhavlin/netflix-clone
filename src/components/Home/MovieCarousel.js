@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import CarouselCounter from "./CarouselCounter";
+import MovieCarouselArrows from "./MovieCarouselArrows";
+import MovieCarouselButtons from "./MovieCarouselButtons";
+import MovieCarouselText from "./MovieCarouselText";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
@@ -12,13 +15,12 @@ const MovieCarousel = ({
 	big,
 }) => {
 	const [myMovies, setMyMovies] = useState([]);
-	const [clicked, setClicked] = useState(false);
 	const carousel = useRef(null);
 	const [realCount, setRealCount] = useState(0);
 	const [firstTime, setFirstTime] = useState(true);
 	const [counter, setCounter] = useState(0);
-	const [teleporting, setTeleporting] = useState(false);
 
+	const [teleporting, setTeleporting] = useState(false);
 	const [transitioning, setTransitioning] = useState(false);
 	useEffect(() => {
 		carousel.current.addEventListener("transitionstart", handleTransition);
@@ -34,7 +36,6 @@ const MovieCarousel = ({
 	const [oldWidth, setOldWidth] = useState(null);
 	useEffect(() => {
 		setMyMovies(movies);
-		console.log(myMovies);
 		resizeCarousel();
 		setOldWidth(window.innerWidth);
 	}, [movies]);
@@ -119,8 +120,8 @@ const MovieCarousel = ({
 
 	const copyElements = (items = itemsVisible) => {
 		const parent = carousel.current;
-		if (!parent.children) return;
-
+		// if (!parent.children) return;
+		console.log(parent);
 		let children = [...parent.children];
 		let firstItems = children.slice(0, items + 1);
 		let lastItems = children.slice(children.length - (items + 1));
@@ -185,7 +186,6 @@ const MovieCarousel = ({
 	const slideRight = () => {
 		if (transitioning) return;
 		setCounter(counter + 1);
-		setClicked(true);
 	};
 	const slideLeft = () => {
 		if (transitioning) return;
@@ -227,20 +227,14 @@ const MovieCarousel = ({
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	const alreadyInMyList = (id) => {
-		return myList.find((item) => item.id === id) ? true : false;
-	};
-
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
 			<h3 className="section-title">{title}</h3>
-			{myMovies.length > itemsVisible ? (
+			{myMovies.length > itemsVisible && (
 				<CarouselCounter
 					number={Math.floor(movies.length / itemsVisible)}
 					counter={realCount}
 				/>
-			) : (
-				""
 			)}
 
 			<div
@@ -253,97 +247,14 @@ const MovieCarousel = ({
 					myMovies.map((movie, index) => {
 						if (makeItEven(index)) {
 							return (
-								<div
-									className={firstOrLastItem(index)}
-									key={movie.id}
-								>
-									<div
-										className="movie"
-										style={{
-											backgroundImage: `url(${
-												imgurl + movie.poster_path
-											})`,
-										}}
-									>
-										<div
-											className="hovered-show"
-											style={{
-												backgroundImage: `url(${
-													imgurl + movie.backdrop_path
-												})`,
-											}}
-										>
+								// prettier-ignore
+								<div className={firstOrLastItem(index)} key={movie.id} >
+									<div className="movie" style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}}>
+										<div className="hovered-show" style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
 											<div className="content-hovered">
 												<div className="content">
-													<section className="buttons-section">
-														<div>
-															<button className="btn-play">
-																<i className="fas fa-play"></i>
-															</button>
-															{alreadyInMyList(
-																movie.id
-															) ? (
-																<button
-																	className="btn-add"
-																	id={
-																		movie.id
-																	}
-																	onClick={
-																		removeFromMyList
-																	}
-																>
-																	<span className="icon-tooltip">
-																		Remove
-																		from My
-																		List
-																	</span>
-																	<i className="fas fa-minus"></i>
-																</button>
-															) : (
-																<button
-																	className="btn-add"
-																	id={
-																		movie.id
-																	}
-																	onClick={
-																		addToMyList
-																	}
-																>
-																	<span className="icon-tooltip">
-																		Add to
-																		My List
-																	</span>
-																	<i className="fas fa-plus"></i>
-																</button>
-															)}
-														</div>
-														<button className="btn-info">
-															<span className="icon-tooltip">
-																More Info
-															</span>
-
-															<i className="fas fa-chevron-down"></i>
-														</button>
-													</section>
-													<section className="text-section">
-														<h4>
-															{movie.name ||
-																movie.title}
-														</h4>
-														<p>
-															Rating:{" "}
-															{movie.vote_average}
-															<span className="age-res">
-																{movie.vote_average >
-																8
-																	? "16+"
-																	: "12+"}
-															</span>{" "}
-															<span>
-																Limited Series
-															</span>
-														</p>
-													</section>
+													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList}/>
+                                                    <MovieCarouselText movie={movie} />
 												</div>
 											</div>
 										</div>
@@ -353,36 +264,15 @@ const MovieCarousel = ({
 						}
 					})
 				) : (
-					<div>No items</div>
+					<div className="no-content">No items</div>
 				)}
 			</div>
-
-			{clicked && (
-				<div
-					className="prev-arrow"
-					onClick={() => {
-						slideLeft();
-					}}
-				>
-					<span>
-						<i className="fas fa-chevron-left"></i>
-					</span>
-				</div>
-			)}
-			{myMovies.length > itemsVisible ? (
-				<div
-					className="next-arrow"
-					onClick={() => {
-						slideRight();
-					}}
-				>
-					<span>
-						<i className="fas fa-chevron-right"></i>
-					</span>
-				</div>
-			) : (
-				""
-			)}
+			<MovieCarouselArrows
+				slideLeft={slideLeft}
+				slideRight={slideRight}
+				myMovies={myMovies}
+				itemsVisible={itemsVisible}
+			/>
 		</section>
 	);
 };
