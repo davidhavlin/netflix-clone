@@ -1,17 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import CarouselCounter from "./CarouselCounter";
-import { debounce } from "lodash-es";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
-const MovieCarousel = ({ title, movies, setMovies, big }) => {
+const MovieCarousel = ({
+	windowWidth,
+	title,
+	movies,
+	setMyList,
+	myList,
+	big,
+}) => {
+	const [myMovies, setMyMovies] = useState([]);
 	const [clicked, setClicked] = useState(false);
-	// const [transformLength, setTransformLength] = useState(-100);
 	const carousel = useRef(null);
 	const [realCount, setRealCount] = useState(0);
 	const [firstTime, setFirstTime] = useState(true);
 	const [counter, setCounter] = useState(0);
-	const [reRender, setReRender] = useState(false);
 	const [teleporting, setTeleporting] = useState(false);
 
 	const [transitioning, setTransitioning] = useState(false);
@@ -26,118 +31,82 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 
 	const [itemsVisible, setItemsVisible] = useState(5);
 	const [width_of_item, set_width_of_item] = useState(20);
+	const [oldWidth, setOldWidth] = useState(null);
 	useEffect(() => {
-		if (window.innerWidth > 1400) {
-			setItemsVisible(6);
-			set_width_of_item(17);
-		} else if (window.innerWidth < 1000) {
-			setItemsVisible(5);
-			set_width_of_item(20);
-		} else if (window.innerWidth < 600) {
-			setItemsVisible(2);
-			set_width_of_item(50);
-		} else if (window.innerWidth < 800) {
-			setItemsVisible(3);
-			set_width_of_item(33);
-		} else if (window.innerWidth < 1000) {
-			setItemsVisible(4);
-			set_width_of_item(25);
-		}
-		window.addEventListener("resize", debounce(handleResizeEvent, 300), {
-			once: true,
-		});
-	}, [counter, firstTime]);
+		setMyMovies(movies);
+		console.log(myMovies);
+		resizeCarousel();
+		setOldWidth(window.innerWidth);
+	}, [movies]);
 
-	const handleResizeEvent = () => {
-		console.log("resize wtf", itemsVisible);
-		// 	if (window.innerWidth > 1000) {
-		// 		setItemsVisible(5);
-		// 		set_width_of_item(20);
-		// 		carousel.current.style.transform = `translateX(${
-		// 			-100 * (counter + 1) - width_of_item
-		// 		}%)`;
-		// 	} else if (window.innerWidth < 800) {
-		// 		setItemsVisible(3);
-		// 		set_width_of_item(33.3);
-		// 		carousel.current.style.transform = `translateX(${
-		// 			-100 * (counter + 1) - width_of_item
-		// 		}%)`;
-		// 	} else if (window.innerWidth < 1000) {
-		// 		setItemsVisible(4);
-		// 		set_width_of_item(25);
-		// 		carousel.current.style.transform = `translateX(${
-		// 			-100 * (counter + 1) - width_of_item
-		// 		}%)`;
-		// 	}
-		if (window.innerWidth > 1400) {
-			doSomething(6, 16.7);
-		} else if (window.innerWidth < 1000) {
-			doSomething(5, 20);
-		} else if (window.innerWidth < 600) {
-			doSomething(2, 50);
-		} else if (window.innerWidth < 800) {
-			doSomething(3, 33);
-		} else if (window.innerWidth < 1000) {
-			doSomething(4, 25);
+	useEffect(() => {
+		if (howBigWidth(windowWidth) === howBigWidth(oldWidth)) return;
+
+		resizeCarousel();
+		setOldWidth(windowWidth);
+	}, [windowWidth]);
+
+	const howBigWidth = (width) => {
+		if (width > 1400) {
+			return "six";
+		} else if (width < 600) {
+			return "two";
+		} else if (width < 800) {
+			return "three";
+		} else if (width < 1000) {
+			return "for";
+		} else if (width < 1400) {
+			return "five";
 		}
 	};
-	const doSomething = (items, itemWidth) => {
-		// carousel.current.style.transform = `translateX(${-100 - itemWidth}%)`;
+
+	const resizeCarousel = () => {
+		if (windowWidth > 1400) {
+			resetCarousel(6, 17.3);
+		} else if (windowWidth < 600) {
+			resetCarousel(2, 50);
+		} else if (windowWidth < 800) {
+			resetCarousel(3, 33);
+		} else if (windowWidth < 1000) {
+			resetCarousel(4, 25);
+		} else if (windowWidth < 1400) {
+			resetCarousel(5, 20);
+		}
+	};
+	const resetCarousel = (items, itemWidth) => {
+		// prettier-ignore
 		if (counter === 0 && firstTime) {
 			carousel.current.style.transform = `translateX(${0}%)`;
 		} else {
-			carousel.current.style.transform = `translateX(${
-				-100 * (counter + 1) - width_of_item
-			}%)`;
+			let num = Math.floor(movies.length / items);
+			if (counter > num) {
+				// let c = num - 1;
+				carousel.current.style.transform = `translateX(${-100 * (num + 1) - width_of_item}%)`;
+                setCounter(num);
+                setRealCount(0);
+			}
+			carousel.current.style.transform = `translateX(${-100 * (counter + 1) - itemWidth}%)`;
+
+			let clones = document.querySelectorAll(".clone");
+			clones.forEach((el) => {el.remove()});
+			setMyMovies(null);
+			setTimeout(() => {
+				setMyMovies(movies);
+				copyElements(items);
+			}, 50);
 		}
-		setReRender(true);
+
 		setItemsVisible(items);
 		set_width_of_item(itemWidth);
-		movies.length = 20;
-		setReRender(false);
 	};
-	useEffect(() => {
-		// console.log("proste nechapem", itemsVisible);
-	}, [itemsVisible]);
 
 	useEffect(() => {
 		const div = carousel.current;
-		// console.log(itemsVisible);
-		// prettier-ignore
 		if (teleporting) return;
-		if (movies.length % itemsVisible === 0) {
-			firstTime
-				? (div.style.transform = `translateX(${-100 * counter}%)`)
-				: (div.style.transform = `translateX(${
-						-100 * (counter + 1) - width_of_item
-				  }%)`);
-		} else {
-			let lastItem = Math.floor(movies.length / itemsVisible);
-
-			if (firstTime) {
-				div.style.transform = `translateX(${-100 * counter}%)`;
-			} else {
-				if (counter === lastItem) {
-					div.style.transform = `translateX(${
-						-100 * (counter + 1) + 1
-					}%)`;
-				} else if (counter === lastItem + 1) {
-					div.style.transform = `translateX(${
-						-100 * (counter + 1) + 1
-					}%)`;
-				} else {
-					div.style.transform = `translateX(${
-						-100 * (counter + 1) - width_of_item
-					}%)`;
-				}
-			}
-
-			// firstTime
-			// ? (div.style.transform = `translateX(${-100 * counter}%)`)
-			// : (div.style.transform = `translateX(${
-			// 		-100 * (counter + 1) - width_of_item
-			//   }%)`);
-		}
+		// prettier-ignore
+		firstTime
+			? (div.style.transform = `translateX(${-100 * counter}%)`)
+			: (div.style.transform = `translateX(${-100 * (counter + 1) - width_of_item}%)`);
 
 		if (counter === -1) {
 			setRealCount(Math.floor(movies.length / itemsVisible - 1));
@@ -148,33 +117,38 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 		}
 	}, [counter]);
 
-	const firstSlide = () => {
-		if (firstTime) {
-			// spustim len ked sa klikne na slide prvy krat a PO transitionu
-			const parent = carousel.current;
-			setFirstTime(false);
-			let children = [...parent.children];
-			let firstItems = children.slice(0, itemsVisible + 1);
-			let lastItems = children.slice(
-				children.length - (itemsVisible + 1)
-			);
-			for (let i = 0; i < firstItems.length; i++) {
-				let clone = firstItems[i].cloneNode(true);
-				parent.append(clone);
-			}
-			for (let i = itemsVisible; i >= 0; i--) {
-				let clone = lastItems[i].cloneNode(true);
-				parent.prepend(clone);
-			}
+	const copyElements = (items = itemsVisible) => {
+		const parent = carousel.current;
+		if (!parent.children) return;
 
-			parent.style.transition = "none";
-			parent.style.transform = `translateX(${-100 * 2 - width_of_item}%)`;
-			setTimeout(() => {
-				parent.style.transition = "transform 0.6s ease";
-			}, 0);
-		} else {
-			return;
+		let children = [...parent.children];
+		let firstItems = children.slice(0, items + 1);
+		let lastItems = children.slice(children.length - (items + 1));
+		for (let i = 0; i < firstItems.length; i++) {
+			let clone = firstItems[i].cloneNode(true);
+			clone.classList.add("clone");
+			parent.append(clone);
 		}
+		for (let i = items; i >= 0; i--) {
+			let clone = lastItems[i].cloneNode(true);
+			clone.classList.add("clone");
+			parent.prepend(clone);
+		}
+	};
+
+	const firstSlide = () => {
+		if (!firstTime) return;
+		// spustim len ked sa klikne na slide prvy krat a PO transitionu
+		setFirstTime(false);
+		copyElements();
+
+		carousel.current.style.transition = "none";
+		carousel.current.style.transform = `translateX(${
+			-100 * 2 - width_of_item
+		}%)`;
+		setTimeout(() => {
+			carousel.current.style.transition = "transform 0.6s ease";
+		}, 0);
 	};
 
 	const handleTransitionEnd = (e) => {
@@ -182,55 +156,28 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 		let lastItem = Math.floor(movies.length / itemsVisible);
 		setTransitioning(false);
 		carousel.current.style.pointerEvents = "initial";
-		if (movies.length % itemsVisible === 0) {
-			if (counter === 1) {
-				firstSlide();
-			} else if (counter === lastItem) {
-				teleportTo("start");
-			} else if (counter === -1) {
-				teleportTo("end");
-			}
-		} else {
-			if (counter === 1) {
-				firstSlide();
-			} else if (counter === lastItem + 1) {
-				teleportTo("start");
-			} else if (counter === -1) {
-				teleportTo("endOdd");
-			}
+		if (counter === 1) {
+			firstSlide();
+		} else if (counter === lastItem) {
+			teleportTo("start");
+		} else if (counter === -1) {
+			teleportTo("end");
 		}
 	};
 
 	const teleportTo = (where) => {
 		setTeleporting(true);
-		console.log(where);
-		const parent = carousel.current;
+		carousel.current.style.transition = "none";
+		let c = null;
+		where === "start"
+			? (c = 0)
+			: (c = Math.floor(movies.length / itemsVisible - 1));
 		// prettier-ignore
-		if (where === "start") {
-            let c = 0; 
-			parent.style.transition = "none";
-			parent.style.transform = `translateX(${
-				-100 * (c + 1) - width_of_item
-            }%)`;
-            setCounter(c);
-		} else if (where === "end") {
-            let c = Math.floor(movies.length / itemsVisible - 1);
-			parent.style.transition = "none";
-			parent.style.transform = `translateX(${
-				-100 * (c + 1) - width_of_item
-			}%)`;
-			setCounter(c);
-		} else if (where === "endOdd") {
-            let c = Math.floor(movies.length / itemsVisible - 1);
-            parent.style.transition = "none";
-            // parent.style.transform = `translateX(${-100 * (c + 1) }%)`;
-            parent.style.transform = `translateX(${-100 * (c + 1) - (width_of_item*3)}%)`;
-            
-			console.log(-100 * (c + 1) - (width_of_item*3)); // musi byt 700
-            setCounter(c);
-		}
+		carousel.current.style.transform = `translateX(${-100 * (c + 1) - width_of_item}%)`;
+		setCounter(c);
+
 		setTimeout(() => {
-			parent.style.transition = "transform 0.6s ease";
+			carousel.current.style.transition = "transform 0.6s ease";
 			setTeleporting(false);
 		}, 50);
 	};
@@ -242,7 +189,6 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 	};
 	const slideLeft = () => {
 		if (transitioning) return;
-
 		setCounter(counter - 1);
 	};
 
@@ -262,8 +208,18 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 		}
 	};
 
-	const addToFavorite = (e) => {
-		console.log(e.target.id);
+	const addToMyList = (e) => {
+		let id = +e.target.id;
+		let newItem = movies.filter((movie) => movie.id === id);
+
+		setMyList((prevList) => {
+			return [...prevList, ...newItem];
+		});
+	};
+	const removeFromMyList = (e) => {
+		let id = +e.target.id;
+		let newArr = myList.filter((item) => item.id !== id);
+		setMyList(newArr);
 	};
 
 	const makeItEven = (i) => {
@@ -271,23 +227,30 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
+	const alreadyInMyList = (id) => {
+		return myList.find((item) => item.id === id) ? true : false;
+	};
+
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
 			<h3 className="section-title">{title}</h3>
-			<CarouselCounter
-				number={Math.floor(movies.length / itemsVisible)}
-				counter={realCount}
-			/>
+			{myMovies.length > itemsVisible ? (
+				<CarouselCounter
+					number={Math.floor(movies.length / itemsVisible)}
+					counter={realCount}
+				/>
+			) : (
+				""
+			)}
 
 			<div
 				className="carousel"
-				className={reRender ? "carousel nieco" : "carousel"}
 				id="carousel"
 				ref={carousel}
 				onTransitionEnd={handleTransitionEnd}
 			>
-				{movies &&
-					movies.map((movie, index) => {
+				{myMovies.length !== 0 ? (
+					myMovies.map((movie, index) => {
 						if (makeItEven(index)) {
 							return (
 								<div
@@ -317,19 +280,42 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 															<button className="btn-play">
 																<i className="fas fa-play"></i>
 															</button>
-															<button
-																className="btn-add"
-																id={movie.id}
-																onClick={
-																	addToFavorite
-																}
-															>
-																<span className="icon-tooltip">
-																	Add to My
-																	List
-																</span>
-																<i className="fas fa-plus"></i>
-															</button>
+															{alreadyInMyList(
+																movie.id
+															) ? (
+																<button
+																	className="btn-add"
+																	id={
+																		movie.id
+																	}
+																	onClick={
+																		removeFromMyList
+																	}
+																>
+																	<span className="icon-tooltip">
+																		Remove
+																		from My
+																		List
+																	</span>
+																	<i className="fas fa-minus"></i>
+																</button>
+															) : (
+																<button
+																	className="btn-add"
+																	id={
+																		movie.id
+																	}
+																	onClick={
+																		addToMyList
+																	}
+																>
+																	<span className="icon-tooltip">
+																		Add to
+																		My List
+																	</span>
+																	<i className="fas fa-plus"></i>
+																</button>
+															)}
 														</div>
 														<button className="btn-info">
 															<span className="icon-tooltip">
@@ -365,7 +351,10 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 								</div>
 							);
 						}
-					})}
+					})
+				) : (
+					<div>No items</div>
+				)}
 			</div>
 
 			{clicked && (
@@ -380,16 +369,20 @@ const MovieCarousel = ({ title, movies, setMovies, big }) => {
 					</span>
 				</div>
 			)}
-			<div
-				className="next-arrow"
-				onClick={() => {
-					slideRight();
-				}}
-			>
-				<span>
-					<i className="fas fa-chevron-right"></i>
-				</span>
-			</div>
+			{myMovies.length > itemsVisible ? (
+				<div
+					className="next-arrow"
+					onClick={() => {
+						slideRight();
+					}}
+				>
+					<span>
+						<i className="fas fa-chevron-right"></i>
+					</span>
+				</div>
+			) : (
+				""
+			)}
 		</section>
 	);
 };

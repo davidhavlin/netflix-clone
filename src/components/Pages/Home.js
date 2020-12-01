@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import RandomMovie from "../Home/RandomMovie";
-import NetflixOriginals from "../Home/NetflixOriginals";
 import MovieCarousel from "../Home/MovieCarousel";
 import { MovieContext } from "../App/MovieContext";
 import "./Home.scss";
+import { debounce } from "lodash-es";
 
 // const API_KEY = process.env.REACT_APP_TMDB_KEY;
 // const base_url = "https://api.themoviedb.org/3/movie/76341?api_key=";
@@ -11,11 +11,23 @@ import "./Home.scss";
 // const top_shows = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
 const Home = () => {
-	const { top_rated_movies, top_rated_shows } = useContext(MovieContext);
+	const { top_rated_movies, top_rated_shows, my_list } = useContext(
+		MovieContext
+	);
 	const [topMovies, setTopMovies] = top_rated_movies;
 	const [topShows, setTopShows] = top_rated_shows;
+	const [myList, setMyList] = my_list;
+	const [windowWidth, setWindowWidth] = useState(null);
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		setWindowWidth(window.innerWidth);
+		window.addEventListener("resize", debounce(handleResizeEvent, 300));
+	}, []);
+
+	const handleResizeEvent = () => {
+		let newWindowWidth = window.innerWidth;
+		setWindowWidth(newWindowWidth);
+	};
 
 	// const randomMovie = (array) => {
 	// 	if (!movies) return;
@@ -26,24 +38,37 @@ const Home = () => {
 	return (
 		<main>
 			<RandomMovie movie={topMovies[5]} />
-			{/* <NetflixOriginals shows={topShows} /> */}
 			<section className="carousel-section">
 				<MovieCarousel
+					windowWidth={windowWidth}
 					title="Netflix Originals"
 					movies={topShows}
-					setMovies={setTopShows}
+					myList={myList}
+					setMyList={setMyList}
 					big={true}
 				/>
 				<MovieCarousel
+					windowWidth={windowWidth}
 					title="Trending Now"
 					movies={topMovies}
-					setMovies={setTopMovies}
+					myList={myList}
+					setMyList={setMyList}
 					big={false}
 				/>
 				<MovieCarousel
-					title="My List"
+					windowWidth={windowWidth}
+					title="Something"
 					movies={topMovies}
-					setMovies={setTopMovies}
+					myList={myList}
+					setMyList={setMyList}
+					big={false}
+				/>
+				<MovieCarousel
+					windowWidth={windowWidth}
+					title="My List"
+					movies={myList}
+					myList={myList}
+					setMyList={setMyList}
 					big={false}
 				/>
 			</section>

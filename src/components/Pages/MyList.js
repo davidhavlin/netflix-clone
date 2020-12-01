@@ -3,16 +3,17 @@ import MovieCarousel from "../Home/MovieCarousel";
 import { MovieContext } from "../App/MovieContext";
 
 const MyList = () => {
-	const { top_rated_shows } = useContext(MovieContext);
-	const [topShows, setTopShows] = top_rated_shows;
+	const { my_list } = useContext(MovieContext);
+	const [myList, setMyList] = my_list;
 
 	return (
 		<section className="carousel-section">
 			<h1>MyList stranka</h1>
 			<MovieCarousel
 				title="My List"
-				movies={topShows}
-				setMovies={setTopShows}
+				movies={myList}
+				myList={myList}
+				setMyList={setMyList}
 				big={false}
 			/>
 		</section>
