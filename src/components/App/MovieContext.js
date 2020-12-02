@@ -9,6 +9,9 @@ export const MovieContext = createContext();
 
 export const MovieProvider = (props) => {
 	const [myList, setMyList] = useState([]);
+	// const [infoModal, setInfoModal] = useState(false);
+	const [showModal, setShowModal] = useState(true);
+	const [selectedMovie, setSelectedMovie] = useState({});
 
 	const [topMovies, setTopMovies] = useState([]);
 	useEffect(() => {
@@ -46,6 +49,8 @@ export const MovieProvider = (props) => {
 	return (
 		<MovieContext.Provider
 			value={{
+				show_modal: [showModal, setShowModal],
+				selected_movie: [selectedMovie, setSelectedMovie],
 				top_rated_movies: [topMovies, setTopMovies],
 				top_rated_shows: [topShows, setTopShows],
 				upcoming_movies: [upcomingMovies, setUpcomingMovies],

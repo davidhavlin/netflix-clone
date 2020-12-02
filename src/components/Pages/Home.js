@@ -11,9 +11,13 @@ import { debounce } from "lodash-es";
 // const top_shows = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
 const Home = () => {
-	const { top_rated_movies, top_rated_shows, my_list } = useContext(
-		MovieContext
-	);
+	const {
+		top_rated_movies,
+		top_rated_shows,
+		my_list,
+		show_modal,
+	} = useContext(MovieContext);
+	// const [showModal, setShowModal] = show_modal,
 	const [topMovies, setTopMovies] = top_rated_movies;
 	const [topShows, setTopShows] = top_rated_shows;
 	const [myList, setMyList] = my_list;

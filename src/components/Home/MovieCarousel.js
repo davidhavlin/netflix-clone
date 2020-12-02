@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import CarouselCounter from "./CarouselCounter";
 import MovieCarouselArrows from "./MovieCarouselArrows";
 import MovieCarouselButtons from "./MovieCarouselButtons";
 import MovieCarouselText from "./MovieCarouselText";
+import { MovieContext } from "../App/MovieContext";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
@@ -14,6 +15,9 @@ const MovieCarousel = ({
 	myList,
 	big,
 }) => {
+	const { show_modal } = useContext(MovieContext);
+	const [showModal, setShowModal] = show_modal;
+
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
 	const [realCount, setRealCount] = useState(0);
@@ -35,6 +39,7 @@ const MovieCarousel = ({
 	const [width_of_item, set_width_of_item] = useState(20);
 	const [oldWidth, setOldWidth] = useState(null);
 	useEffect(() => {
+		console.log(showModal);
 		setMyMovies(movies);
 		resizeCarousel();
 		setOldWidth(window.innerWidth);
