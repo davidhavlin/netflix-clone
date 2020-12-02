@@ -15,13 +15,35 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie }) => {
 
 	return (
 		<div className="info-page-modal">
-			<section className="modal-box">
+			<main className="modal-box">
 				<div className="box-poster">
 					<div className="exit-btn" onClick={handleClick}>
 						<i class="far fa-times-circle"></i>
 					</div>
 					<div className="poster-title">Movie Title</div>
-					<div className="poster-buttons"></div>
+					<div className="poster-buttons">
+						<button className="btn-play">
+							<i className="fas fa-play"></i>
+						</button>
+						<button
+							className="btn-add"
+							// id={movie.id}
+							// onClick={removeFromMyList}
+						>
+							<span className="icon-tooltip">
+								Remove from My List
+							</span>
+							<i className="fas fa-minus"></i>
+						</button>
+						<button
+							className="btn-add"
+							// id={movie.id}
+							// onClick={addToMyList}
+						>
+							<span className="icon-tooltip">Add to My List</span>
+							<i className="fas fa-plus"></i>
+						</button>
+					</div>
 				</div>
 				<div className="box-content">
 					<section className="text-content">
@@ -48,7 +70,7 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie }) => {
 					</section>
 					<div>{selectedMovie.length}</div>
 				</div>
-			</section>
+			</main>
 			<div className="modal-bg"></div>
 		</div>
 	);
