@@ -5,15 +5,35 @@ const MovieCarouselButtons = ({
 	myList,
 	removeFromMyList,
 	addToMyList,
+	selectMovie,
 }) => {
+	// const selectMovie = (e) => {
+	// 	let id = e.target.id;
+
+	// 	let selected = myMovies.find((movie) => movie.id === id);
+	// 	console.log(selected);
+
+	// 	setSelectedMovie(selected);
+	// };
+
 	const alreadyInMyList = (id) => {
 		return myList.find((item) => item.id === id) ? true : false;
+	};
+
+	const nieco = (item) => {
+		console.log("hehe", item);
 	};
 
 	return (
 		<section className="buttons-section">
 			<div>
-				<button className="btn-play">
+				<button
+					id={movie.id}
+					className="btn-play"
+					onClick={() => {
+						nieco(movie);
+					}}
+				>
 					<i className="fas fa-play"></i>
 				</button>
 				{alreadyInMyList(movie.id) ? (
@@ -38,7 +58,7 @@ const MovieCarouselButtons = ({
 					</button>
 				)}
 			</div>
-			<button className="btn-info">
+			<button id={movie.id} className="btn-info" onClick={selectMovie}>
 				<span className="icon-tooltip">More Info</span>
 
 				<i className="fas fa-chevron-down"></i>

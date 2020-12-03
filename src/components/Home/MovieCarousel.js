@@ -15,8 +15,9 @@ const MovieCarousel = ({
 	myList,
 	big,
 }) => {
-	const { show_modal } = useContext(MovieContext);
+	const { show_modal, selected_movie } = useContext(MovieContext);
 	const [showModal, setShowModal] = show_modal;
+	const [selectedMovie, setSelectedMovie] = selected_movie;
 
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
@@ -39,7 +40,6 @@ const MovieCarousel = ({
 	const [width_of_item, set_width_of_item] = useState(20);
 	const [oldWidth, setOldWidth] = useState(null);
 	useEffect(() => {
-		console.log(showModal);
 		setMyMovies(movies);
 		resizeCarousel();
 		setOldWidth(window.innerWidth);
@@ -232,6 +232,15 @@ const MovieCarousel = ({
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
+	const selectMovie = (e) => {
+		let id = +e.target.id;
+
+		let selected = myMovies.find((movie) => movie.id === id);
+		console.log(selected);
+		setSelectedMovie(selected);
+		setShowModal(true);
+	};
+
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
 			<h3 className="section-title">{title}</h3>
@@ -258,7 +267,7 @@ const MovieCarousel = ({
 										<div className="hovered-show" style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
 											<div className="content-hovered">
 												<div className="content">
-													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList}/>
+													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectMovie={selectMovie} setShowModal={setShowModal} />
                                                     <MovieCarouselText movie={movie} />
 												</div>
 											</div>
