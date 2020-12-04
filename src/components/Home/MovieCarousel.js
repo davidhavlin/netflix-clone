@@ -15,12 +15,16 @@ const MovieCarousel = ({
 	myList,
 	big,
 }) => {
-	const { show_modal, selected_movie, list_functions } = useContext(
-		MovieContext
-	);
+	const {
+		show_modal,
+		selected_movie,
+		list_functions,
+		top_height,
+	} = useContext(MovieContext);
 	const [showModal, setShowModal] = show_modal;
 	const [selectedMovie, setSelectedMovie] = selected_movie;
 	const [addToMyList, removeFromMyList] = list_functions;
+	const [topHeight, setTopHeight] = top_height;
 
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
@@ -222,6 +226,7 @@ const MovieCarousel = ({
 	};
 
 	const selectMovie = (selected) => {
+		setTopHeight(window.scrollY);
 		setSelectedMovie(selected);
 		setShowModal(true);
 	};

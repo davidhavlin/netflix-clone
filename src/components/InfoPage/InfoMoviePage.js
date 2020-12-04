@@ -5,9 +5,17 @@ import "./InfoMoviePage.scss";
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 const apiKey = process.env.REACT_APP_TMDB_KEY;
 
-const InfoMoviePage = ({ showModal, setShowModal, selectedMovie, fromTop }) => {
+const InfoMoviePage = ({
+	showModal,
+	setShowModal,
+	selectedMovie,
+	fromTop,
+	topHeight,
+}) => {
 	const { my_list, list_functions } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList] = list_functions;
+
+	const [tHeight, setTHeight] = topHeight;
 
 	const [myList, setMyList] = my_list;
 	const [similiarMovies, setSimiliarMovies] = useState([]);
@@ -17,9 +25,11 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie, fromTop }) => {
 	const similiar_shows_url = `https://api.themoviedb.org/3/tv/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
 
 	useEffect(() => {
-		console.log("toto sa spusta?");
+		let scrollBefore = tHeight;
+		setTHeight(null);
 		return () => {
-			window.scrollTo(0, fromTop);
+			window.scrollTo(0, scrollBefore);
+			setTHeight(scrollBefore);
 		};
 	}, []);
 
@@ -32,21 +42,13 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie, fromTop }) => {
 		window.scrollTo(0, 0);
 		setSelectedID(selectedMovie.id);
 		let url = selectedMovie.name ? similiar_shows_url : similiar_movies_url;
-		// moreLikeThis();
+
 		fetch(url)
 			.then((res) => res.json())
 			.then((data) => {
 				setSimiliarMovies(data.results);
 			});
 	}, [selectedMovie]);
-
-	// const moreLikeThis = () => {
-	// 	fetch(similiar_movies_url)
-	// 		.then((res) => res.json())
-	// 		.then((data) => {
-	// 			console.log(data);
-	// 		});
-	// };
 
 	const handleClick = () => {
 		setShowModal(false);

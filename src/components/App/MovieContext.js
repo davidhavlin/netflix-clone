@@ -14,6 +14,8 @@ export const MovieProvider = (props) => {
 	const [showVideo, setShowVideo] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState({});
 
+	const [topHeight, setTopHeight] = useState(0);
+
 	const [myList, setMyList] = useState([]);
 	const addToMyList = (item) => {
 		setMyList((prevList) => [...prevList, item]);
@@ -76,6 +78,7 @@ export const MovieProvider = (props) => {
 				upcoming_movies: [upcomingMovies, setUpcomingMovies],
 				now_playing: [nowPlaying, setNowPlaying],
 				my_list: [myList, setMyList],
+				top_height: [topHeight, setTopHeight],
 			}}
 		>
 			{props.children}
