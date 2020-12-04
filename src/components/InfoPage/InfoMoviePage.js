@@ -26,7 +26,7 @@ const InfoMoviePage = ({
 
 	useEffect(() => {
 		let scrollBefore = tHeight;
-		setTHeight(null);
+		// setTHeight(null);
 		return () => {
 			window.scrollTo(0, scrollBefore);
 			setTHeight(scrollBefore);
@@ -38,7 +38,7 @@ const InfoMoviePage = ({
 		if (selectedID === selectedMovie.id) {
 			console.log("su rovnake");
 		}
-		console.log(selectedID);
+		console.log("selectedID", selectedID);
 		window.scrollTo(0, 0);
 		setSelectedID(selectedMovie.id);
 		let url = selectedMovie.name ? similiar_shows_url : similiar_movies_url;

@@ -1,6 +1,6 @@
 import Header from "../Header/Header";
 import Main from "./Main";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Footer from "../Footer/Footer";
 import { MovieContext } from "../App/MovieContext";
 import InfoMoviePage from "../InfoPage/InfoMoviePage";
@@ -11,17 +11,26 @@ const ProviderApp = () => {
 	const [showModal, setShowModal] = show_modal;
 	const [selectedMovie] = selected_movie;
 
+	const elApp = useRef(null);
+
+	// useEffect(() => {
+	// 	window.scrollTo(0, topHeight);
+	// }, [topHeight]);
+
 	useEffect(() => {
-		console.log("menim sa", topHeight);
-		window.scrollTo(0, topHeight);
-	}, [topHeight]);
+		if (!showModal) {
+			setTimeout(() => {
+				elApp.current.classList.remove("show-modal");
+				window.scrollTo(0, topHeight);
+			}, 0);
+		} else {
+			elApp.current.classList.add("show-modal");
+		}
+	}, [showModal]);
 
 	return (
 		<div className="provider-app">
-			<div
-				className={showModal ? "App show-modal" : "App"}
-				style={{ top: `-${topHeight}px` }}
-			>
+			<div ref={elApp} className="App" style={{ top: `-${topHeight}px` }}>
 				<Header />
 				<Main />
 				<Footer />
