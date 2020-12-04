@@ -16,13 +16,10 @@
 		background: #141414;
 		z-index: 1;
 		margin-bottom: 2em;
-		// transform-origin: 50% 12.5%;
 		top: 2em;
 		width: 850px;
 		opacity: 1;
-		// transform: none;
 		min-width: 850px;
-		// will-change: transform;
 		color: #fff;
 		border-radius: 6px;
 		overflow: hidden;
@@ -237,7 +234,7 @@
 				.info {
 					color: #fff;
 					font-size: 1em;
-					margin: 0 0 1.4rem 0;
+					margin: 0 0 1.1rem 0;
 					span {
 						margin-right: 0.4rem;
 					}
@@ -253,6 +250,12 @@
 						border: 1px solid #fff;
 						font-weight: normal;
 					}
+				}
+				.title {
+					color: #fff;
+					display: block;
+					font-size: 1.1em;
+					margin-bottom: 0.5rem;
 				}
 			}
 		}

@@ -9,10 +9,19 @@ const now_playing_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=
 export const MovieContext = createContext();
 
 export const MovieProvider = (props) => {
-	const [myList, setMyList] = useState([]);
 	// const [infoModal, setInfoModal] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+	const [showVideo, setShowVideo] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState({});
+
+	const [myList, setMyList] = useState([]);
+	const addToMyList = (item) => {
+		setMyList((prevList) => [...prevList, item]);
+	};
+	const removeFromMyList = (item) => {
+		let newArr = myList.filter((movie) => movie.id !== item.id);
+		setMyList(newArr);
+	};
 
 	const [topMovies, setTopMovies] = useState([]);
 	useEffect(() => {
@@ -59,6 +68,7 @@ export const MovieProvider = (props) => {
 	return (
 		<MovieContext.Provider
 			value={{
+				list_functions: [addToMyList, removeFromMyList],
 				show_modal: [showModal, setShowModal],
 				selected_movie: [selectedMovie, setSelectedMovie],
 				top_rated_movies: [topMovies, setTopMovies],

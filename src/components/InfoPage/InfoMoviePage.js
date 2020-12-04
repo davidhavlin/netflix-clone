@@ -5,17 +5,32 @@ import "./InfoMoviePage.scss";
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 const apiKey = process.env.REACT_APP_TMDB_KEY;
 
-const InfoMoviePage = ({ showModal, setShowModal, selectedMovie }) => {
-	const { my_list } = useContext(MovieContext);
+const InfoMoviePage = ({ showModal, setShowModal, selectedMovie, fromTop }) => {
+	const { my_list, list_functions } = useContext(MovieContext);
+	const [addToMyList, removeFromMyList] = list_functions;
+
 	const [myList, setMyList] = my_list;
 	const [similiarMovies, setSimiliarMovies] = useState([]);
+	const [selectedID, setSelectedID] = useState(null);
 
 	const similiar_movies_url = `https://api.themoviedb.org/3/movie/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
 	const similiar_shows_url = `https://api.themoviedb.org/3/tv/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
 
 	useEffect(() => {
-		window.scrollTo(0, 0);
+		console.log("toto sa spusta?");
+		return () => {
+			window.scrollTo(0, fromTop);
+		};
+	}, []);
+
+	useEffect(() => {
 		if (!selectedMovie.id) return;
+		if (selectedID === selectedMovie.id) {
+			console.log("su rovnake");
+		}
+		console.log(selectedID);
+		window.scrollTo(0, 0);
+		setSelectedID(selectedMovie.id);
 		let url = selectedMovie.name ? similiar_shows_url : similiar_movies_url;
 		// moreLikeThis();
 		fetch(url)
@@ -131,8 +146,9 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie }) => {
 							{alreadyInMyList(selectedMovie.id) ? (
 								<button
 									className="btn-add"
-									// id={movie.id}
-									// onClick={removeFromMyList}
+									onClick={() => {
+										removeFromMyList(selectedMovie);
+									}}
 								>
 									<span className="icon-tooltip">
 										Remove from My List
@@ -142,8 +158,9 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie }) => {
 							) : (
 								<button
 									className="btn-add"
-									// id={movie.id}
-									// onClick={addToMyList}
+									onClick={() => {
+										addToMyList(selectedMovie);
+									}}
 								>
 									<span className="icon-tooltip">
 										Add to My List
@@ -232,6 +249,9 @@ const InfoMoviePage = ({ showModal, setShowModal, selectedMovie }) => {
 												</span>
 											</p>
 											<p>
+												<span className="title">
+													{movie.name || movie.title}
+												</span>
 												{shorterOverview(
 													movie.overview
 												)}

@@ -16,12 +16,12 @@ const Home = () => {
 		top_rated_shows,
 		my_list,
 		now_playing,
-		show_modal,
+		// show_modal,
 	} = useContext(MovieContext);
-	// const [showModal, setShowModal] = show_modal,
-	const [topMovies, setTopMovies] = top_rated_movies;
-	const [topShows, setTopShows] = top_rated_shows;
-	const [nowPlaying, setNowPlaying] = now_playing;
+	const [topMovies] = top_rated_movies;
+	const [topShows] = top_rated_shows;
+	const [nowPlaying] = now_playing;
+	// const [showModal, setShowModal] = show_modal;
 	const [myList, setMyList] = my_list;
 	const [windowWidth, setWindowWidth] = useState(null);
 

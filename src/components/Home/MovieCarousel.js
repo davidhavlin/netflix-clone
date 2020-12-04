@@ -15,9 +15,12 @@ const MovieCarousel = ({
 	myList,
 	big,
 }) => {
-	const { show_modal, selected_movie } = useContext(MovieContext);
+	const { show_modal, selected_movie, list_functions } = useContext(
+		MovieContext
+	);
 	const [showModal, setShowModal] = show_modal;
 	const [selectedMovie, setSelectedMovie] = selected_movie;
+	const [addToMyList, removeFromMyList] = list_functions;
 
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
@@ -213,30 +216,12 @@ const MovieCarousel = ({
 		}
 	};
 
-	const addToMyList = (e) => {
-		let id = +e.target.id;
-		let newItem = movies.filter((movie) => movie.id === id);
-
-		setMyList((prevList) => {
-			return [...prevList, ...newItem];
-		});
-	};
-	const removeFromMyList = (e) => {
-		let id = +e.target.id;
-		let newArr = myList.filter((item) => item.id !== id);
-		setMyList(newArr);
-	};
-
 	const makeItEven = (i) => {
 		// pokial sa neda cislo delit poctom filmov tak upravim pocet filmov
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	const selectMovie = (e) => {
-		let id = +e.target.id;
-
-		let selected = myMovies.find((movie) => movie.id === id);
-		console.log(selected);
+	const selectMovie = (selected) => {
 		setSelectedMovie(selected);
 		setShowModal(true);
 	};

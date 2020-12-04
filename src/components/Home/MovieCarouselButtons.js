@@ -7,15 +7,6 @@ const MovieCarouselButtons = ({
 	addToMyList,
 	selectMovie,
 }) => {
-	// const selectMovie = (e) => {
-	// 	let id = e.target.id;
-
-	// 	let selected = myMovies.find((movie) => movie.id === id);
-	// 	console.log(selected);
-
-	// 	setSelectedMovie(selected);
-	// };
-
 	const alreadyInMyList = (id) => {
 		return myList.find((item) => item.id === id) ? true : false;
 	};
@@ -28,7 +19,6 @@ const MovieCarouselButtons = ({
 		<section className="buttons-section">
 			<div>
 				<button
-					id={movie.id}
 					className="btn-play"
 					onClick={() => {
 						nieco(movie);
@@ -39,8 +29,9 @@ const MovieCarouselButtons = ({
 				{alreadyInMyList(movie.id) ? (
 					<button
 						className="btn-add"
-						id={movie.id}
-						onClick={removeFromMyList}
+						onClick={() => {
+							removeFromMyList(movie);
+						}}
 					>
 						<span className="icon-tooltip">
 							Remove from My List
@@ -50,15 +41,22 @@ const MovieCarouselButtons = ({
 				) : (
 					<button
 						className="btn-add"
-						id={movie.id}
-						onClick={addToMyList}
+						onClick={() => {
+							addToMyList(movie);
+						}}
 					>
 						<span className="icon-tooltip">Add to My List</span>
 						<i className="fas fa-plus"></i>
 					</button>
 				)}
 			</div>
-			<button id={movie.id} className="btn-info" onClick={selectMovie}>
+			<button
+				id={movie.id}
+				className="btn-info"
+				onClick={() => {
+					selectMovie(movie);
+				}}
+			>
 				<span className="icon-tooltip">More Info</span>
 
 				<i className="fas fa-chevron-down"></i>
