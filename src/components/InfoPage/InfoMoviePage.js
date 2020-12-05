@@ -232,7 +232,9 @@ const InfoMoviePage = ({
 												}`,
 											}}
 											className="poster"
-										></div>
+										>
+											{!movie.poster_path && "No image"}
+										</div>
 										<div className="text">
 											<p className="info">
 												<span className="rating">
