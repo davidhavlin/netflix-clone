@@ -5,8 +5,9 @@ import SecondNavigation from "./SecondNavigation/SecondNavigation";
 import { MovieContext } from "../App/MovieContext";
 
 const Header = () => {
-	const { upcoming_movies } = useContext(MovieContext);
+	const { upcoming_movies, show_modal } = useContext(MovieContext);
 	const [upcomingMovies, setUpcomingMovies] = upcoming_movies;
+	const [showModal, setShowModal] = show_modal;
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
@@ -19,7 +20,7 @@ const Header = () => {
 
 	return (
 		<header className="navigation-header">
-			<nav className={scrolled ? "sticky-nav" : ""}>
+			<nav className={scrolled || showModal ? "sticky-nav" : ""}>
 				<MainNavigation />
 				<SecondNavigation movies={upcomingMovies} />
 			</nav>

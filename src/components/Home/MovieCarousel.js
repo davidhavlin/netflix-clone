@@ -17,10 +17,12 @@ const MovieCarousel = ({
 }) => {
 	const {
 		show_modal,
+		show_video,
 		selected_movie,
 		list_functions,
 		top_height,
 	} = useContext(MovieContext);
+	const [showVideo, setShowVideo] = show_video;
 	const [showModal, setShowModal] = show_modal;
 	const [selectedMovie, setSelectedMovie] = selected_movie;
 	const [addToMyList, removeFromMyList] = list_functions;
@@ -133,7 +135,6 @@ const MovieCarousel = ({
 	const copyElements = (items = itemsVisible) => {
 		const parent = carousel.current;
 		// if (!parent.children) return;
-		console.log(parent);
 		let children = [...parent.children];
 		let firstItems = children.slice(0, items + 1);
 		let lastItems = children.slice(children.length - (items + 1));
@@ -225,10 +226,14 @@ const MovieCarousel = ({
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	const selectMovie = (selected) => {
-		setTopHeight(window.scrollY);
+	const selectMovie = (selected, type) => {
 		setSelectedMovie(selected);
-		setShowModal(true);
+		if (type === "info") {
+			setTopHeight(window.scrollY);
+			setShowModal(true);
+		} else {
+			setShowVideo(true);
+		}
 	};
 
 	return (

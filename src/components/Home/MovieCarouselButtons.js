@@ -11,17 +11,13 @@ const MovieCarouselButtons = ({
 		return myList.find((item) => item.id === id) ? true : false;
 	};
 
-	const nieco = (item) => {
-		console.log("hehe", item);
-	};
-
 	return (
 		<section className="buttons-section">
 			<div>
 				<button
 					className="btn-play"
 					onClick={() => {
-						nieco(movie);
+						selectMovie(movie, "video");
 					}}
 				>
 					<i className="fas fa-play"></i>
@@ -51,10 +47,9 @@ const MovieCarouselButtons = ({
 				)}
 			</div>
 			<button
-				id={movie.id}
 				className="btn-info"
 				onClick={() => {
-					selectMovie(movie);
+					selectMovie(movie, "info");
 				}}
 			>
 				<span className="icon-tooltip">More Info</span>

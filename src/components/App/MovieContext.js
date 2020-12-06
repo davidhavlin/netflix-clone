@@ -70,6 +70,7 @@ export const MovieProvider = (props) => {
 	return (
 		<MovieContext.Provider
 			value={{
+				show_video: [showVideo, setShowVideo],
 				list_functions: [addToMyList, removeFromMyList],
 				show_modal: [showModal, setShowModal],
 				selected_movie: [selectedMovie, setSelectedMovie],

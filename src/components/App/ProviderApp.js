@@ -4,9 +4,13 @@ import React, { useContext, useEffect, useRef } from "react";
 import Footer from "../Footer/Footer";
 import { MovieContext } from "../App/MovieContext";
 import InfoMoviePage from "../InfoPage/InfoMoviePage";
+import VideoMoviePage from "../VideoMoviePage/VideoMoviePage";
 
 const ProviderApp = () => {
-	const { show_modal, selected_movie, top_height } = useContext(MovieContext);
+	const { show_modal, show_video, selected_movie, top_height } = useContext(
+		MovieContext
+	);
+	const [showVideo, setShowVideo] = show_video;
 	const [topHeight, setTopHeight] = top_height;
 	const [showModal, setShowModal] = show_modal;
 	const [selectedMovie] = selected_movie;
@@ -44,7 +48,12 @@ const ProviderApp = () => {
 					topHeight={top_height}
 				/>
 			)}
-			{/* <VideoMoviePage /> */}
+			{showVideo && (
+				<VideoMoviePage
+					selectedMovie={selectedMovie}
+					setShowVideo={setShowVideo}
+				/>
+			)}
 		</div>
 	);
 };

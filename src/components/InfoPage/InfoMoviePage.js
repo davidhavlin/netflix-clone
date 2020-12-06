@@ -12,12 +12,12 @@ const InfoMoviePage = ({
 	fromTop,
 	topHeight,
 }) => {
-	const { my_list, list_functions } = useContext(MovieContext);
+	const { my_list, list_functions, show_video } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList] = list_functions;
-
+	const [showVideo, setShowVideo] = show_video;
 	const [tHeight, setTHeight] = topHeight;
-
 	const [myList, setMyList] = my_list;
+
 	const [similiarMovies, setSimiliarMovies] = useState([]);
 	const [selectedID, setSelectedID] = useState(null);
 
@@ -120,6 +120,10 @@ const InfoMoviePage = ({
 		return string.length > 160 ? string.substring(0, 160) + "..." : string;
 	};
 
+	const showYtVideo = () => {
+		setShowVideo(true);
+	};
+
 	return (
 		<div className="info-page-modal">
 			<main className="modal-box">
@@ -139,7 +143,12 @@ const InfoMoviePage = ({
 							{selectedMovie.title || selectedMovie.name}
 						</div>
 						<div className="poster-buttons">
-							<button className="btn-play">
+							<button
+								className="btn-play"
+								onClick={() => {
+									showYtVideo();
+								}}
+							>
 								<span>
 									<i className="fas fa-play"></i>
 								</span>

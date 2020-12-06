@@ -5,8 +5,9 @@ import { MovieContext } from "../App/MovieContext";
 const url = "https://image.tmdb.org/t/p/w1280";
 
 const RandomMovie = ({ movie }) => {
-	const { show_modal, selected_movie } = useContext(MovieContext);
+	const { show_modal, selected_movie, show_video } = useContext(MovieContext);
 	const [showModal, setShowModal] = show_modal;
+	const [showVideo, setShowVideo] = show_video;
 	const [selectedMovie, setSelectedMovie] = selected_movie;
 
 	const shorterTitle = (title) => {
@@ -18,9 +19,13 @@ const RandomMovie = ({ movie }) => {
 		return string.length > 160 ? string.substring(0, 160) + "..." : string;
 	};
 
-	const showInfo = (selected) => {
+	const showSelectedMovie = (selected, type) => {
 		setSelectedMovie(selected);
-		setShowModal(true);
+		if (type === "info") {
+			setShowModal(true);
+		} else {
+			setShowVideo(true);
+		}
 	};
 
 	return (
@@ -45,7 +50,12 @@ const RandomMovie = ({ movie }) => {
 						: "The Moovie description"}
 				</p>
 				<div className="movie-buttons">
-					<button className="play-btn">
+					<button
+						className="play-btn"
+						onClick={() => {
+							showSelectedMovie(movie, "video");
+						}}
+					>
 						<span>
 							<i className="fas fa-play"></i>
 						</span>
@@ -54,7 +64,7 @@ const RandomMovie = ({ movie }) => {
 					<button
 						className="info-btn"
 						onClick={() => {
-							showInfo(movie);
+							showSelectedMovie(movie, "info");
 						}}
 					>
 						<span>
