@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+// import
 import searchIcon from "./search-icon.svg";
 
 const Search = () => {
@@ -28,6 +29,11 @@ const Search = () => {
 			searchInput.current.focus();
 		}, 500);
 	};
+
+	const skuska = (e) => {
+		console.log(e.target.value);
+		// window.location.assign("/search");
+	};
 	return (
 		<div
 			className={openedSearch ? "search search-open" : "search"}
@@ -38,6 +44,7 @@ const Search = () => {
 					ref={searchInput}
 					type="text"
 					placeholder="Shows, Movies, Genres"
+					onChange={skuska}
 				/>
 
 				<img src={searchIcon} className="search-icon" alt="logo" />

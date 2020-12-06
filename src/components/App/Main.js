@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../Pages/Home";
 import Movies from "../Pages/Movies";
 import MyList from "../Pages/MyList";
+import SearchPage from "../Pages/SearchPage";
 import "./Main.scss";
 
 // The Main component renders one of the three provided
@@ -16,6 +17,7 @@ const Main = () => (
 			<Route exact path="/" component={Home} />
 			<Route path="/movies" component={Movies} />
 			<Route path="/mylist" component={MyList} />
+			<Route path="/search" component={SearchPage} />
 		</Switch>
 	</main>
 );
