@@ -26,8 +26,16 @@ const Home = () => {
 	const [windowWidth, setWindowWidth] = useState(null);
 
 	useEffect(() => {
-		setWindowWidth(window.innerWidth);
+		// setWindowWidth(window.innerWidth);
+		handleResizeEvent();
 		window.addEventListener("resize", debounce(handleResizeEvent, 300));
+
+		return () => {
+			window.removeEventListener(
+				"resize",
+				debounce(handleResizeEvent, 300)
+			);
+		};
 	}, []);
 
 	const handleResizeEvent = () => {
@@ -50,7 +58,7 @@ const Home = () => {
 					title="Netflix Originals"
 					movies={topShows}
 					myList={myList}
-					setMyList={setMyList}
+					// setMyList={setMyList}
 					big={true}
 				/>
 				<MovieCarousel

@@ -7,26 +7,9 @@ import { MovieContext } from "../App/MovieContext";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
-const MovieCarousel = ({
-	windowWidth,
-	title,
-	movies,
-	setMyList,
-	myList,
-	big,
-}) => {
-	const {
-		show_modal,
-		show_video,
-		selected_movie,
-		list_functions,
-		top_height,
-	} = useContext(MovieContext);
-	const [showVideo, setShowVideo] = show_video;
-	const [showModal, setShowModal] = show_modal;
-	const [selectedMovie, setSelectedMovie] = selected_movie;
-	const [addToMyList, removeFromMyList] = list_functions;
-	const [topHeight, setTopHeight] = top_height;
+const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
+	const { list_functions } = useContext(MovieContext);
+	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
 
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
@@ -37,6 +20,7 @@ const MovieCarousel = ({
 	const [teleporting, setTeleporting] = useState(false);
 	const [transitioning, setTransitioning] = useState(false);
 	useEffect(() => {
+		// nieco ako kontrolka toho ci sa prave hybe slider a zakaze na neho pocas pohybu klikat
 		carousel.current.addEventListener("transitionstart", handleTransition);
 	}, []);
 	const handleTransition = (e) => {
@@ -50,15 +34,16 @@ const MovieCarousel = ({
 	const [oldWidth, setOldWidth] = useState(null);
 	useEffect(() => {
 		setMyMovies(movies);
-		resizeCarousel();
+		resizeCarousel(window.innerWidth); // tu je chyba ********************************
 		setOldWidth(window.innerWidth);
 	}, [movies]);
 
 	useEffect(() => {
+		// resizovanie sa spusti len ak je novy rozmer v inej kategorii ako stary rozmer
 		if (howBigWidth(windowWidth) === howBigWidth(oldWidth)) return;
-
-		resizeCarousel();
-		setOldWidth(windowWidth);
+		console.log("TOTOTOTOTOTO", window.innerWidth);
+		resizeCarousel(window.innerWidth);
+		setOldWidth(windowWidth); // a nastavi novy width
 	}, [windowWidth]);
 
 	const howBigWidth = (width) => {
@@ -75,25 +60,28 @@ const MovieCarousel = ({
 		}
 	};
 
-	const resizeCarousel = () => {
-		if (windowWidth > 1400) {
+	const resizeCarousel = (width) => {
+		if (width > 1400) {
 			resetCarousel(6, 17.3);
-		} else if (windowWidth < 600) {
+		} else if (width < 600) {
 			resetCarousel(2, 50);
-		} else if (windowWidth < 800) {
+		} else if (width < 800) {
 			resetCarousel(3, 33);
-		} else if (windowWidth < 1000) {
+		} else if (width < 1000) {
 			resetCarousel(4, 25);
-		} else if (windowWidth < 1400) {
+		} else if (width < 1400) {
 			resetCarousel(5, 20);
 		}
 	};
 	const resetCarousel = (items, itemWidth) => {
+		console.log("ARGUMENTY: ", items, itemWidth);
 		// prettier-ignore
-		if (counter === 0 && firstTime) {
+		if (counter === 0 && firstTime) { // spusta sa pri resizovani ked este nenastal klik na dalsie, jednoducho nastavi '0'
+            console.log('counter je na 0 a firstTime este nebolo')
 			carousel.current.style.transform = `translateX(${0}%)`;
-		} else {
-			let num = Math.floor(movies.length / items);
+		} else { // *********************************************************************************
+            let num = Math.floor(movies.length / items);
+            console.log('firstTime uz bolo, num je: ', movies.length / items);
 			if (counter > num) {
 				// let c = num - 1;
 				carousel.current.style.transform = `translateX(${-100 * (num + 1) - width_of_item}%)`;
@@ -134,7 +122,7 @@ const MovieCarousel = ({
 
 	const copyElements = (items = itemsVisible) => {
 		const parent = carousel.current;
-		// if (!parent.children) return;
+		if (!parent.children) return;
 		let children = [...parent.children];
 		let firstItems = children.slice(0, items + 1);
 		let lastItems = children.slice(children.length - (items + 1));
@@ -226,15 +214,15 @@ const MovieCarousel = ({
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	const selectMovie = (selected, type) => {
-		setSelectedMovie(selected);
-		if (type === "info") {
-			setTopHeight(window.scrollY);
-			setShowModal(true);
-		} else {
-			setShowVideo(true);
-		}
-	};
+	// const selectMovie = (selected, type) => {
+	// 	setSelectedMovie(selected);
+	// 	if (type === "info") {
+	// 		setTopHeight(window.scrollY);
+	// 		setShowModal(true);
+	// 	} else {
+	// 		setShowVideo(true);
+	// 	}
+	// };
 
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
@@ -262,7 +250,7 @@ const MovieCarousel = ({
 										<div className="hovered-show" style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
 											<div className="content-hovered">
 												<div className="content">
-													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectMovie={selectMovie} setShowModal={setShowModal} />
+													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectThisItem={selectThisItem} />
                                                     <MovieCarouselText movie={movie} />
 												</div>
 											</div>
