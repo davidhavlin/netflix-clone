@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./VideoMoviePage.scss";
 
-const autoplay = "?autoplay=1";
 const api = process.env.REACT_APP_TMDB_KEY;
 
 const VideoMoviePage = ({ selectedMovie, setShowVideo }) => {
@@ -36,6 +35,7 @@ const VideoMoviePage = ({ selectedMovie, setShowVideo }) => {
 		<div className="video-page">
 			{ytKey && (
 				<iframe
+					title="Movie Trailer"
 					className="video-player"
 					width="420"
 					height="315"

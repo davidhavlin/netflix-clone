@@ -113,6 +113,8 @@
 							pointer-events: none;
 						}
 						.icon-tooltip {
+							width: 9rem;
+							box-shadow: 0px 1px 7px 1px #00000045;
 							background: #fff;
 							color: #000;
 							position: absolute;
@@ -220,6 +222,13 @@
 			min-height: 150px;
 			border-radius: 5px;
 			overflow: hidden;
+			cursor: pointer;
+
+			&:hover .poster {
+				.poster-play-icon {
+					opacity: 1;
+				}
+			}
 
 			.poster {
 				width: 100%;
@@ -231,6 +240,32 @@
 				color: #616161;
 				background-color: #3a3a3a;
 				font-style: italic;
+
+				.poster-play-icon {
+					font-size: 3.5em;
+					color: #fff;
+					opacity: 0;
+					transition: opacity 0.3s ease;
+
+					i {
+						position: relative;
+					}
+					i:after {
+						content: "";
+						background-color: #18181866;
+						position: absolute;
+						width: 52px;
+						height: 52px;
+						border-radius: 50%;
+						left: 2px;
+						top: 3px;
+						z-index: 0;
+					}
+					i:before {
+						z-index: 1;
+						position: relative;
+					}
+				}
 			}
 
 			.text {

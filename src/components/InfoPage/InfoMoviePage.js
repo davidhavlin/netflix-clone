@@ -5,21 +5,13 @@ import "./InfoMoviePage.scss";
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 const apiKey = process.env.REACT_APP_TMDB_KEY;
 
-const InfoMoviePage = ({
-	showModal,
-	setShowModal,
-	selectedMovie,
-	fromTop,
-	topHeight,
-}) => {
-	const { my_list, list_functions, show_video } = useContext(MovieContext);
-	const [addToMyList, removeFromMyList] = list_functions;
-	const [showVideo, setShowVideo] = show_video;
+const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
+	const { my_list, list_functions } = useContext(MovieContext);
+	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
 	const [tHeight, setTHeight] = topHeight;
 	const [myList, setMyList] = my_list;
 
 	const [similiarMovies, setSimiliarMovies] = useState([]);
-	const [selectedID, setSelectedID] = useState(null);
 
 	const similiar_movies_url = `https://api.themoviedb.org/3/movie/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
 	const similiar_shows_url = `https://api.themoviedb.org/3/tv/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
@@ -35,12 +27,7 @@ const InfoMoviePage = ({
 
 	useEffect(() => {
 		if (!selectedMovie.id) return;
-		if (selectedID === selectedMovie.id) {
-			console.log("su rovnake");
-		}
-		console.log("selectedID", selectedID);
 		window.scrollTo(0, 0);
-		setSelectedID(selectedMovie.id);
 		let url = selectedMovie.name ? similiar_shows_url : similiar_movies_url;
 
 		fetch(url)
@@ -120,10 +107,6 @@ const InfoMoviePage = ({
 		return string.length > 160 ? string.substring(0, 160) + "..." : string;
 	};
 
-	const showYtVideo = () => {
-		setShowVideo(true);
-	};
-
 	return (
 		<div className="info-page-modal">
 			<main className="modal-box">
@@ -146,7 +129,7 @@ const InfoMoviePage = ({
 							<button
 								className="btn-play"
 								onClick={() => {
-									showYtVideo();
+									selectThisItem(selectedMovie, "video");
 								}}
 							>
 								<span>
@@ -233,7 +216,13 @@ const InfoMoviePage = ({
 						<div className="movies-container">
 							{similiarMovies.length !== 0 ? (
 								similiarMovies.map((movie) => (
-									<div key={movie.id} className="sim-movie">
+									<div
+										key={movie.id}
+										className="sim-movie"
+										onClick={() => {
+											selectThisItem(movie, "video");
+										}}
+									>
 										<div
 											style={{
 												backgroundImage: `url(${
@@ -243,6 +232,9 @@ const InfoMoviePage = ({
 											className="poster"
 										>
 											{!movie.poster_path && "No image"}
+											<div className="poster-play-icon">
+												<i className="far fa-play-circle"></i>
+											</div>
 										</div>
 										<div className="text">
 											<p className="info">
