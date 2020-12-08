@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
-import MovieCarousel from "../Home/MovieCarousel";
+import React, { useEffect, useContext } from "react";
+import MovieContainer from "../App/MovieContainer";
 import { MovieContext } from "../App/MovieContext";
+import "./MyList.scss";
 
 const MyList = () => {
 	const { my_list } = useContext(MovieContext);
 	const [myList, setMyList] = my_list;
 
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
-		<section className="carousel-section">
-			<h1>MyList stranka</h1>
-			<MovieCarousel
-				title="My List"
-				movies={myList}
-				myList={myList}
-				setMyList={setMyList}
-				big={false}
-			/>
+		<section className="mylist-page">
+			<h2>My List</h2>
+			<MovieContainer movies={myList} noItems={"Your list is empty"} />
 		</section>
 	);
 };

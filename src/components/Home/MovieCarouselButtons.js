@@ -5,7 +5,7 @@ const MovieCarouselButtons = ({
 	myList,
 	removeFromMyList,
 	addToMyList,
-	selectMovie,
+	selectThisItem,
 }) => {
 	const alreadyInMyList = (id) => {
 		return myList.find((item) => item.id === id) ? true : false;
@@ -17,7 +17,7 @@ const MovieCarouselButtons = ({
 				<button
 					className="btn-play"
 					onClick={() => {
-						selectMovie(movie, "video");
+						selectThisItem(movie, "video");
 					}}
 				>
 					<i className="fas fa-play"></i>
@@ -49,7 +49,7 @@ const MovieCarouselButtons = ({
 			<button
 				className="btn-info"
 				onClick={() => {
-					selectMovie(movie, "info");
+					selectThisItem(movie, "info");
 				}}
 			>
 				<span className="icon-tooltip">More Info</span>
