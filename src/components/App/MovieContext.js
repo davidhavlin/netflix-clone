@@ -9,20 +9,38 @@ const now_playing_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=
 export const MovieContext = createContext();
 
 export const MovieProvider = (props) => {
-	// const [infoModal, setInfoModal] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [showVideo, setShowVideo] = useState(false);
 	const [selectedMovie, setSelectedMovie] = useState({});
 	const [searchedMovies, setSearchedMovies] = useState([]);
-
 	const [topHeight, setTopHeight] = useState(0);
 
+	const selectThisItem = (movie, type) => {
+		setSelectedMovie(movie);
+		if (type === "info") {
+			setTopHeight(window.scrollY);
+			setShowModal(true);
+		} else {
+			setShowVideo(true);
+		}
+	};
+
 	const [myList, setMyList] = useState([]);
+	useEffect(() => {
+		let stored = localStorage.getItem("myList");
+		if (!stored) return;
+		setMyList(JSON.parse(stored));
+	}, []);
 	const addToMyList = (item) => {
-		setMyList((prevList) => [...prevList, item]);
+		setMyList((prevList) => {
+			const newArr = [...prevList, item];
+			localStorage.setItem("myList", JSON.stringify(newArr));
+			return newArr;
+		});
 	};
 	const removeFromMyList = (item) => {
 		let newArr = myList.filter((movie) => movie.id !== item.id);
+		localStorage.setItem("myList", JSON.stringify(newArr));
 		setMyList(newArr);
 	};
 
@@ -72,7 +90,7 @@ export const MovieProvider = (props) => {
 		<MovieContext.Provider
 			value={{
 				show_video: [showVideo, setShowVideo],
-				list_functions: [addToMyList, removeFromMyList],
+				list_functions: [addToMyList, removeFromMyList, selectThisItem],
 				show_modal: [showModal, setShowModal],
 				selected_movie: [selectedMovie, setSelectedMovie],
 				top_rated_movies: [topMovies, setTopMovies],

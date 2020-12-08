@@ -41,10 +41,8 @@ const ProviderApp = () => {
 			</div>
 			{showModal && (
 				<InfoMoviePage
-					showModal={showModal}
-					setShowModal={setShowModal}
 					selectedMovie={selectedMovie}
-					// fromTop={showModal ? window.scrollY : 0}
+					setShowModal={setShowModal}
 					topHeight={top_height}
 				/>
 			)}
