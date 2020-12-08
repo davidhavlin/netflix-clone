@@ -45,18 +45,14 @@ const Search = () => {
 	};
 
 	const handleTyping = (e, history) => {
-		if (window.location.pathname !== "/search") {
-			history.push("/search");
-			console.log("redirect");
-		}
+		if (window.location.pathname !== "/search") history.push("/search");
 		let searchedWord = e.target.value;
-		searchMovies(searchedWord);
-		console.log(e.target.value, window.location);
-		// window.location.assign("/search");
 
-		if (!e.target.value) {
+		if (!searchedWord) {
 			history.push("/");
+			return;
 		}
+		searchMovies(searchedWord);
 	};
 
 	const searchMovies = async (word) => {
@@ -68,7 +64,6 @@ const Search = () => {
 		let items = data.results.filter(
 			(movie) => movie.media_type !== "person"
 		);
-		console.log(items, data.results);
 		setSearchedMovies(items);
 	};
 
