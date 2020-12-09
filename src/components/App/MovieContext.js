@@ -86,11 +86,40 @@ export const MovieProvider = (props) => {
 			});
 	}, []);
 
+	const [searchWord, setSearchWord] = useState("");
+	const searchMovies = async (word) => {
+		setSearchWord(word);
+		let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${word}&page=1&include_adult=false`;
+
+		let response = await fetch(url);
+		let data = await response.json();
+
+		let items = data.results.filter(
+			(movie) => movie.media_type !== "person"
+		);
+		setSearchedMovies(items);
+	};
+
+	const [pageCount, setPageCount] = useState(2);
+	const searchMoreMovies = async () => {
+		let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${searchWord}&page=${pageCount}&include_adult=false`;
+
+		let response = await fetch(url);
+		let data = await response.json();
+		setPageCount(pageCount + 1);
+
+		let items = data.results.filter(
+			(movie) => movie.media_type !== "person"
+		);
+		setSearchedMovies((prevItems) => [...prevItems, ...items]);
+	};
+
 	return (
 		<MovieContext.Provider
 			value={{
 				show_video: [showVideo, setShowVideo],
 				list_functions: [addToMyList, removeFromMyList, selectThisItem],
+				search_functions: [searchMovies, searchMoreMovies],
 				show_modal: [showModal, setShowModal],
 				selected_movie: [selectedMovie, setSelectedMovie],
 				top_rated_movies: [topMovies, setTopMovies],

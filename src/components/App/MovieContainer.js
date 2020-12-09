@@ -78,7 +78,6 @@ const MovieContainer = ({ movies, noItems }) => {
 			) : (
 				<div className="no-movie-items">{noItems}..</div>
 			)}
-			{movies.length >= 20 && <div>More results</div>}
 		</div>
 	);
 };

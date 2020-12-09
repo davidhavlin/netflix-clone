@@ -14,8 +14,9 @@ const api = process.env.REACT_APP_TMDB_KEY;
 // const url = `https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&query=NIECO&page=1&include_adult=false`
 
 const Search = () => {
-	const { searched_movies } = useContext(MovieContext);
+	const { searched_movies, search_functions } = useContext(MovieContext);
 	const [searchedMovies, setSearchedMovies] = searched_movies;
+	const [searchMovies, searchMoreMovies] = search_functions;
 	const [openedSearch, setopenedSearch] = useState(false);
 
 	const searchInput = useRef(null);
@@ -53,18 +54,6 @@ const Search = () => {
 			return;
 		}
 		searchMovies(searchedWord);
-	};
-
-	const searchMovies = async (word) => {
-		let url = `https://api.themoviedb.org/3/search/multi?api_key=${api}&language=en-US&query=${word}&page=1&include_adult=false`;
-
-		let response = await fetch(url);
-		let data = await response.json();
-
-		let items = data.results.filter(
-			(movie) => movie.media_type !== "person"
-		);
-		setSearchedMovies(items);
 	};
 
 	const clickOnClear = (history) => {

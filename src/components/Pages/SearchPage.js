@@ -5,8 +5,9 @@ import MovieContainer from "../App/MovieContainer";
 import "./SearchPage.scss";
 
 const SearchPage = () => {
-	const { searched_movies } = useContext(MovieContext);
+	const { searched_movies, search_functions } = useContext(MovieContext);
 	const [searchedMovies, setSearchedMovies] = searched_movies;
+	const [searchMovies, searchMoreMovies] = search_functions;
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -19,6 +20,17 @@ const SearchPage = () => {
 				movies={searchedMovies}
 				noItems={"No search results"}
 			/>
+			{searchedMovies.length >= 20 && (
+				<div className="more-btn">
+					<button
+						onClick={() => {
+							searchMoreMovies();
+						}}
+					>
+						More results
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
