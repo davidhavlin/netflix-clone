@@ -10,6 +10,9 @@ const Profile = ({ showNotify, setShowProfile }) => {
 
 	useEffect(() => {
 		setVisibleMenu(false);
+		setTimeout(() => {
+			profile.current.classList.remove("profile-hidden");
+		}, 200);
 	}, []);
 
 	useEffect(() => {
@@ -45,7 +48,7 @@ const Profile = ({ showNotify, setShowProfile }) => {
 				timeout={200}
 				nodeRef={profile}
 			>
-				<div className="profile-dropdown" ref={profile}>
+				<div className="profile-dropdown profile-hidden" ref={profile}>
 					<div className="dropdown-top">
 						<div className="kid-section">
 							<div className="kid-picture"></div>

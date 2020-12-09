@@ -36,6 +36,7 @@ const Search = () => {
 	);
 	const closeSearch = () => {
 		setopenedSearch(false);
+		searchInput.current.value = "";
 	};
 
 	const clickOnSearch = () => {

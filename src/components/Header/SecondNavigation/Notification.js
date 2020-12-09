@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import notificationBell from "./bell-icon.svg";
 import "./Notification.scss";
 import { CSSTransition } from "react-transition-group";
+import { MovieContext } from "../../App/MovieContext";
 
 const imgurl = "https://image.tmdb.org/t/p/w500";
 
 const Notification = ({ movies, showProfile, setShowNotify }) => {
+	const { list_functions } = useContext(MovieContext);
+	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
 	const [visibleNotifications, setVisibleNotifications] = useState(true);
 	const [notifyVisited, setNotifyVisited] = useState(false);
 	const notify = useRef(null);
@@ -13,6 +16,9 @@ const Notification = ({ movies, showProfile, setShowNotify }) => {
 
 	useEffect(() => {
 		setVisibleNotifications(false);
+		setTimeout(() => {
+			notify.current.classList.remove("notify-hidden");
+		}, 200);
 	}, []);
 
 	useEffect(() => {
@@ -60,12 +66,21 @@ const Notification = ({ movies, showProfile, setShowNotify }) => {
 				timeout={200}
 				nodeRef={notify}
 			>
-				<div className="notification-dropdown" ref={notify}>
+				<div
+					className="notification-dropdown notify-hidden"
+					ref={notify}
+				>
 					<div className="notifications">
 						{movies &&
 							movies.map((movie) => {
 								return (
-									<div key={movie.id} className="notify">
+									<div
+										key={movie.id}
+										className="notify"
+										onClick={() => {
+											selectThisItem(movie, "info");
+										}}
+									>
 										<div
 											className="notify-bg"
 											style={{

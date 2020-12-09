@@ -17,6 +17,9 @@
 		border-width: 5px 5px 0 5px;
 		border-color: #fff transparent transparent transparent;
 	}
+	.profile-hidden {
+		opacity: 0 !important;
+	}
 	.profile-dropdown {
 		position: absolute;
 		background: rgba(0, 0, 0, 0.85);
