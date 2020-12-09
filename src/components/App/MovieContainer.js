@@ -9,7 +9,7 @@ const imgurl_small = "https://image.tmdb.org/t/p/w342";
 const MovieContainer = ({ movies, noItems }) => {
 	const { my_list, list_functions } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
-	const [myList, setMyList] = my_list;
+	const [myList] = my_list;
 
 	const handleClick = (e, movie) => {
 		if (e.target.classList.contains("movie-item")) {
@@ -41,7 +41,6 @@ const MovieContainer = ({ movies, noItems }) => {
 				movies.map((movie, index) => (
 					<div
 						key={movie.id}
-						className="movie-item"
 						onClick={(e) => {
 							handleClick(e, movie);
 						}}
