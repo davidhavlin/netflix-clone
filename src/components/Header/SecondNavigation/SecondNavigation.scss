@@ -22,6 +22,19 @@
 		.search-icon {
 			width: 20px;
 		}
+		.clear-input-icon {
+			display: block;
+			position: absolute;
+			right: 0.7rem;
+			opacity: 1;
+			i {
+				pointer-events: none;
+			}
+		}
+		.clear-input-icon-hide {
+			opacity: 0;
+			display: none;
+		}
 		input {
 			width: 100%;
 			display: none;

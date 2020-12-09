@@ -19,7 +19,7 @@ const Search = () => {
 	const [openedSearch, setopenedSearch] = useState(false);
 
 	const searchInput = useRef(null);
-	const ref = useRef(null);
+	const container = useRef(null);
 
 	useEffect(() => {
 		document.addEventListener("click", clickListener);
@@ -27,11 +27,11 @@ const Search = () => {
 
 	const clickListener = useCallback(
 		(e) => {
-			if (!ref.current.contains(e.target)) {
+			if (!container.current.contains(e.target)) {
 				closeSearch && closeSearch();
 			}
 		},
-		[ref.current]
+		[container.current]
 	);
 	const closeSearch = () => {
 		setopenedSearch(false);
@@ -67,6 +67,11 @@ const Search = () => {
 		setSearchedMovies(items);
 	};
 
+	const clickOnClear = (history) => {
+		searchInput.current.value = "";
+		history.push("/");
+	};
+
 	const debounceTyping = debounce(handleTyping, 500);
 
 	return (
@@ -76,7 +81,7 @@ const Search = () => {
 					className={openedSearch ? "search search-open" : "search"}
 					onClick={clickOnSearch}
 				>
-					<div ref={ref} className="search-container">
+					<div ref={container} className="search-container">
 						<input
 							ref={searchInput}
 							type="text"
@@ -91,6 +96,20 @@ const Search = () => {
 							className="search-icon"
 							alt="logo"
 						/>
+						<div
+							className="clear-input-icon"
+							className={
+								openedSearch && searchInput.current.value
+									? "clear-input-icon"
+									: "clear-input-icon-hide"
+							}
+							onClick={() => {
+								clickOnClear(history);
+							}}
+							id="close-search"
+						>
+							<i className="fas fa-times"></i>
+						</div>
 					</div>
 				</div>
 			)}
