@@ -41,7 +41,6 @@ const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
 	useEffect(() => {
 		// resizovanie sa spusti len ak je novy rozmer v inej kategorii ako stary rozmer
 		if (howBigWidth(windowWidth) === howBigWidth(oldWidth)) return;
-		console.log("TOTOTOTOTOTO", window.innerWidth);
 		resizeCarousel(window.innerWidth);
 		setOldWidth(windowWidth); // a nastavi novy width
 	}, [windowWidth]);
@@ -74,28 +73,22 @@ const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
 		}
 	};
 	const resetCarousel = (items, itemWidth) => {
-		console.log("ARGUMENTY: ", items, itemWidth);
 		// prettier-ignore
 		if (counter === 0 && firstTime) { // spusta sa pri resizovani ked este nenastal klik na dalsie, jednoducho nastavi '0'
-            console.log('counter je na 0 a firstTime este nebolo')
 			carousel.current.style.transform = `translateX(${0}%)`;
-		} else { // *********************************************************************************
+		} else { // toto sa spusti ked uz user preklikaval slider a resizne okno
             let num = Math.floor(movies.length / items);
-            console.log('firstTime uz bolo, num je: ', movies.length / items);
-			if (counter > num) {
-				// let c = num - 1;
-				carousel.current.style.transform = `translateX(${-100 * (num + 1) - width_of_item}%)`;
-                setCounter(num);
-                setRealCount(0);
+            if (counter > num) { // ked mam zobrazene napr iba 2 itemy, counter moze byt ovela vacsi nez pri zobrazovani viac itemov a preto
+                        // pri preskakovani musim nastavit counter na 0 alebo na posledny mozny aby bol slider na konci.
+                setCounter(num - 1);
+                setRealCount(num - 1);
 			}
 			carousel.current.style.transform = `translateX(${-100 * (counter + 1) - itemWidth}%)`;
 
-			let clones = document.querySelectorAll(".clone");
-			clones.forEach((el) => {el.remove()});
-			setMyMovies(null);
+			let clones = document.querySelectorAll(".clone"); 
+			clones.forEach((el) => {el.remove()}); // vymazem vsetky klony
 			setTimeout(() => {
-				setMyMovies(movies);
-				copyElements(items);
+				copyElements(items);  // a nasledne pridam klony podla toho kolko itemov je nastavenych
 			}, 50);
 		}
 
@@ -213,16 +206,6 @@ const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
 		// pokial sa neda cislo delit poctom filmov tak upravim pocet filmov
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
-
-	// const selectMovie = (selected, type) => {
-	// 	setSelectedMovie(selected);
-	// 	if (type === "info") {
-	// 		setTopHeight(window.scrollY);
-	// 		setShowModal(true);
-	// 	} else {
-	// 		setShowVideo(true);
-	// 	}
-	// };
 
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
