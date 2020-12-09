@@ -123,6 +123,7 @@
 				padding: 0.5rem;
 				opacity: 0;
 				transition: opacity 1s ease;
+				cursor: pointer;
 
 				&::after {
 					content: "";
@@ -139,6 +140,7 @@
 					width: 100%;
 					position: relative;
 					z-index: 10;
+					cursor: auto;
 
 					.buttons-section {
 						display: flex;
@@ -224,7 +226,7 @@
 						.age-res {
 							color: #fff;
 							font-size: 0.9em;
-							padding: 0.05rem;
+							padding: 0.05rem 0.2rem;
 							border: 1px solid #fff;
 							margin: 0 0.3rem;
 							font-weight: normal;
@@ -262,6 +264,7 @@
 			}
 
 			.hovered-show {
+				border-radius: 0;
 				border-top-left-radius: 5px;
 				border-top-right-radius: 5px;
 				box-shadow: 1px 1px 14px 5px rgba(0, 0, 0, 0.3);
@@ -269,7 +272,7 @@
 				.content-hovered {
 					width: 100%;
 					position: absolute;
-					bottom: -67%;
+					top: 100%;
 					left: 0;
 					z-index: 10;
 					background: #141414;
@@ -315,6 +318,7 @@
 						font-size: 0.7em;
 					}
 					.text-section h4 {
+						white-space: initial;
 						font-size: 0.9em;
 						margin: 0.5rem 0 0 0;
 					}

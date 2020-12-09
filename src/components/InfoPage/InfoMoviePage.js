@@ -15,6 +15,7 @@ const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
 
 	const similiar_movies_url = `https://api.themoviedb.org/3/movie/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
 	const similiar_shows_url = `https://api.themoviedb.org/3/tv/${selectedMovie.id}/similar?api_key=${apiKey}&language=en-US&page=1`;
+	const cast_url = `https://api.themoviedb.org/3/movie/${selectedMovie.id}/credits?api_key=${apiKey}&language=en-US`;
 
 	useEffect(() => {
 		let scrollBefore = tHeight;
@@ -24,6 +25,16 @@ const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
 			setTHeight(scrollBefore);
 		};
 	}, []);
+
+	const [cast, setCast] = useState([]);
+
+	const getCast = async () => {
+		let response = await fetch(cast_url);
+		let data = await response.json();
+		if (!data.cast) return;
+		let newArr = data.cast.slice(0, 5);
+		setCast(newArr);
+	};
 
 	useEffect(() => {
 		if (!selectedMovie.id) return;
@@ -35,6 +46,8 @@ const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
 			.then((data) => {
 				setSimiliarMovies(data.results);
 			});
+
+		getCast();
 	}, [selectedMovie]);
 
 	const handleClick = () => {
@@ -201,12 +214,30 @@ const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
 									)}{" "}
 							</p>
 							<p className="country">
-								Country:{" "}
+								Country:
 								<span>
 									{selectedMovie.origin_country
 										? selectedMovie.origin_country[0]
 										: "unknown"}
 								</span>
+							</p>
+							<p className="cast">
+								Cast:
+								{cast.length > 0 ? (
+									cast.map((actor, index, array) => (
+										<span key={actor.id}>
+											{actor.name}
+											{needComma(index, array)}
+										</span>
+									))
+								) : (
+									<span>unknown</span>
+								)}
+								{/* <span>
+									{selectedMovie.origin_country
+										? selectedMovie.origin_country[0]
+										: "unknown"}
+								</span> */}
 							</p>
 						</div>
 					</section>

@@ -207,6 +207,12 @@ const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
+	const handleClick = (e, movie) => {
+		if (e.target.classList.contains("hovered-show")) {
+			selectThisItem(movie, "video");
+		}
+	};
+
 	return (
 		<section className={`movies-section ${big ? "" : "small-version"}`}>
 			<h3 className="section-title">{title}</h3>
@@ -230,7 +236,7 @@ const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
 								// prettier-ignore
 								<div className={firstOrLastItem(index)} key={movie.id} >
 									<div className="movie" style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}}>
-										<div className="hovered-show" style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
+										<div className="hovered-show" onClick={(e)=>{handleClick(e, movie);}} style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
 											<div className="content-hovered">
 												<div className="content">
 													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectThisItem={selectThisItem} />

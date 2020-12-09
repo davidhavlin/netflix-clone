@@ -73,17 +73,6 @@
 			border-top-right-radius: 5px;
 			box-shadow: 1px 1px 14px 5px rgba(0, 0, 0, 0.3);
 
-			&::after {
-				content: "";
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: rgba(0, 0, 0, 0.2);
-				z-index: 0;
-			}
-
 			.content-hovered {
 				width: 100%;
 				position: absolute;
@@ -205,6 +194,9 @@
 		&:hover {
 			transform: scale(1.4) translateY(-41px);
 			z-index: 100;
+			border-radius: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
 
 			.content-hovered {
 				pointer-events: initial !important;
@@ -216,6 +208,9 @@
 			.item-title {
 				opacity: 0;
 			}
+		}
+		&:hover.movie-item::after {
+			opacity: 0;
 		}
 	}
 	.item-title {

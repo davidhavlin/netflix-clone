@@ -5,23 +5,16 @@ import { MovieContext } from "../App/MovieContext";
 import "./Home.scss";
 import { debounce } from "lodash-es";
 
-// const API_KEY = process.env.REACT_APP_TMDB_KEY;
-// const base_url = "https://api.themoviedb.org/3/movie/76341?api_key=";
-// const top_movies = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
-// const top_shows = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
-
 const Home = () => {
 	const {
 		top_rated_movies,
 		top_rated_shows,
 		my_list,
 		now_playing,
-		// show_modal,
 	} = useContext(MovieContext);
 	const [topMovies] = top_rated_movies;
 	const [topShows] = top_rated_shows;
 	const [nowPlaying] = now_playing;
-	// const [showModal, setShowModal] = show_modal;
 	const [myList, setMyList] = my_list;
 	const [windowWidth, setWindowWidth] = useState(null);
 
@@ -43,15 +36,9 @@ const Home = () => {
 		setWindowWidth(newWindowWidth);
 	};
 
-	// const randomMovie = (array) => {
-	// 	if (!movies) return;
-	// 	let randomNumber = Math.floor(Math.random() * array.length);
-	// 	setHighlightMovie(array[randomNumber]);
-	// };
-
 	return (
 		<main>
-			<RandomMovie movie={topMovies[5]} />
+			<RandomMovie />
 			<section className="carousel-section">
 				<MovieCarousel
 					windowWidth={windowWidth}

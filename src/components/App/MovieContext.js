@@ -1,10 +1,11 @@
 import React, { useState, useEffect, createContext } from "react";
 
 const API_KEY = process.env.REACT_APP_TMDB_KEY;
-const top_movies_url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
+// const top_movies_url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
 const top_shows_url = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
 const upcoming_movies_url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`;
 const now_playing_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
+const trending_daily_url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
 
 export const MovieContext = createContext();
 
@@ -43,16 +44,6 @@ export const MovieProvider = (props) => {
 		localStorage.setItem("myList", JSON.stringify(newArr));
 		setMyList(newArr);
 	};
-
-	const [topMovies, setTopMovies] = useState([]);
-	useEffect(() => {
-		fetch(top_movies_url)
-			.then((res) => res.json())
-			.then((data) => {
-				setTopMovies(data.results);
-				// console.log(data.results);
-			});
-	}, []);
 
 	const [topShows, setTopShows] = useState([]);
 	useEffect(() => {
@@ -114,9 +105,21 @@ export const MovieProvider = (props) => {
 		setSearchedMovies((prevItems) => [...prevItems, ...items]);
 	};
 
+	const [trendingMovie, setTrendingMovie] = useState({});
+	const [topMovies, setTopMovies] = useState([]);
+	useEffect(() => {
+		fetch(trending_daily_url)
+			.then((res) => res.json())
+			.then((data) => {
+				setTopMovies(data.results);
+				setTrendingMovie(data.results[0]);
+			});
+	}, []);
+
 	return (
 		<MovieContext.Provider
 			value={{
+				trending_movie: [trendingMovie, setTrendingMovie],
 				show_video: [showVideo, setShowVideo],
 				list_functions: [addToMyList, removeFromMyList, selectThisItem],
 				search_functions: [searchMovies, searchMoreMovies],
