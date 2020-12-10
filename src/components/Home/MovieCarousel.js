@@ -7,9 +7,10 @@ import { MovieContext } from "../App/MovieContext";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
-const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
-	const { list_functions } = useContext(MovieContext);
+const MovieCarousel = ({ title, movies, myList, big }) => {
+	const { list_functions, window_width } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
+	const [windowWidth, setWindowWidth] = window_width;
 
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
@@ -34,7 +35,7 @@ const MovieCarousel = ({ windowWidth, title, movies, myList, big }) => {
 	const [oldWidth, setOldWidth] = useState(null);
 	useEffect(() => {
 		setMyMovies(movies);
-		resizeCarousel(window.innerWidth); // tu je chyba ********************************
+		resizeCarousel(window.innerWidth);
 		setOldWidth(window.innerWidth);
 	}, [movies]);
 

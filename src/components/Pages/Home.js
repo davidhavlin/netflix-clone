@@ -16,32 +16,16 @@ const Home = () => {
 	const [topShows] = top_rated_shows;
 	const [nowPlaying] = now_playing;
 	const [myList, setMyList] = my_list;
-	const [windowWidth, setWindowWidth] = useState(null);
 
-	useEffect(() => {
-		// setWindowWidth(window.innerWidth);
-		handleResizeEvent();
-		window.addEventListener("resize", debounce(handleResizeEvent, 300));
-
-		return () => {
-			window.removeEventListener(
-				"resize",
-				debounce(handleResizeEvent, 300)
-			);
-		};
-	}, []);
-
-	const handleResizeEvent = () => {
-		let newWindowWidth = window.innerWidth;
-		setWindowWidth(newWindowWidth);
+	const pickOneMovie = (movies) => {
+		return movies.find((movie) => movie.vote_average > 5);
 	};
 
 	return (
 		<main>
-			<RandomMovie />
+			<RandomMovie movie={pickOneMovie(topMovies)} />
 			<section className="carousel-section">
 				<MovieCarousel
-					windowWidth={windowWidth}
 					title="Netflix Originals"
 					movies={topShows}
 					myList={myList}
@@ -49,7 +33,6 @@ const Home = () => {
 					big={true}
 				/>
 				<MovieCarousel
-					windowWidth={windowWidth}
 					title="Trending Now"
 					movies={topMovies}
 					myList={myList}
@@ -57,7 +40,6 @@ const Home = () => {
 					big={false}
 				/>
 				<MovieCarousel
-					windowWidth={windowWidth}
 					title="New"
 					movies={nowPlaying}
 					myList={myList}
@@ -65,7 +47,6 @@ const Home = () => {
 					big={false}
 				/>
 				<MovieCarousel
-					windowWidth={windowWidth}
 					title="My List"
 					movies={myList}
 					myList={myList}
