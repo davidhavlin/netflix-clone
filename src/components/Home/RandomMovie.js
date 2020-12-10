@@ -4,10 +4,9 @@ import { MovieContext } from "../App/MovieContext";
 
 const url = "https://image.tmdb.org/t/p/w1280";
 
-const RandomMovie = () => {
-	const { list_functions, trending_movie } = useContext(MovieContext);
+const RandomMovie = ({ movie }) => {
+	const { list_functions } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
-	const [trendingMovie] = trending_movie;
 
 	const shorterOverview = (string) => {
 		if (!string) return;
@@ -18,30 +17,28 @@ const RandomMovie = () => {
 		<div
 			className="highlight-movie"
 			style={{
-				backgroundImage: trendingMovie
-					? `url(${url + trendingMovie.backdrop_path})`
+				backgroundImage: movie
+					? `url(${url + movie.backdrop_path})`
 					: "",
 			}}
 		>
 			<div className="movie-left-content">
 				<h1 className="movie-title">
-					{trendingMovie ? trendingMovie.title : "The Movie Title"}
+					{movie ? movie.title : "The Movie Title"}
 				</h1>
 				<h3 className="movie-popularity">
-					{trendingMovie
-						? "Popularity: " + trendingMovie.vote_average
-						: "Popularity"}
+					{movie ? "Popularity: " + movie.vote_average : "Popularity"}
 				</h3>
 				<p className="movie-overview">
-					{trendingMovie
-						? shorterOverview(trendingMovie.overview)
+					{movie
+						? shorterOverview(movie.overview)
 						: "The Moovie description"}
 				</p>
 				<div className="movie-buttons">
 					<button
 						className="play-btn"
 						onClick={() => {
-							selectThisItem(trendingMovie, "video");
+							selectThisItem(movie, "video");
 						}}
 					>
 						<span>
@@ -52,7 +49,7 @@ const RandomMovie = () => {
 					<button
 						className="info-btn"
 						onClick={() => {
-							selectThisItem(trendingMovie, "info");
+							selectThisItem(movie, "info");
 						}}
 					>
 						<span>
