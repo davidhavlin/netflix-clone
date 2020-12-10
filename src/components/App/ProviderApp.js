@@ -16,10 +16,7 @@ const ProviderApp = () => {
 	const [selectedMovie] = selected_movie;
 
 	const elApp = useRef(null);
-
-	// useEffect(() => {
-	// 	window.scrollTo(0, topHeight);
-	// }, [topHeight]);
+	const underApp = useRef(null);
 
 	useEffect(() => {
 		if (!showModal) {
@@ -32,12 +29,25 @@ const ProviderApp = () => {
 		}
 	}, [showModal]);
 
+	useEffect(() => {
+		if (!showVideo) {
+			setTimeout(() => {
+				underApp.current.classList.remove("prepare-video");
+				// window.scrollTo(0, topHeight);
+			}, 0);
+		} else {
+			underApp.current.classList.add("prepare-video");
+		}
+	}, [showVideo]);
+
 	return (
 		<div className="provider-app">
 			<div ref={elApp} className="App" style={{ top: `-${topHeight}px` }}>
 				<Header />
-				<Main />
-				<Footer />
+				<div className="app-container" ref={underApp}>
+					<Main />
+					<Footer />
+				</div>
 			</div>
 			{showModal && (
 				<InfoMoviePage

@@ -20,10 +20,24 @@ main {
 }
 .App {
 	overflow: hidden;
+	/* will-change: transform;
+    transition: transform 1.2s ease, opacity 1s ease; */
+	/* position: relative; */
+	width: 100%;
 }
 .show-modal {
 	position: fixed;
+}
+.app-container {
+	opacity: 1;
+	will-change: transform;
+	transition: transform 1.2s ease, opacity 1s ease;
+}
+.prepare-video {
+	/* position: fixed; */
 	width: 100%;
+	transform: scale(1.1);
+	opacity: 0;
 }
 /**
    * Correct the font size and margin on `h1` elements within `section` and

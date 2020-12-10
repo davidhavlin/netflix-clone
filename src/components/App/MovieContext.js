@@ -42,8 +42,18 @@ export const MovieProvider = (props) => {
 			setShowModal(true);
 		} else {
 			setShowVideo(true);
+			if (showModal) return;
+			setTopHeight(window.scrollY);
 		}
 	};
+
+	// useEffect(() => {
+	// 	if (!showVideo && showModal) {
+	// 		setTimeout(() => {
+	// 			window.scrollTo(0, 0);
+	// 		}, 0);
+	// 	}
+	// }, [showModal, showVideo]);
 
 	const [myList, setMyList] = useState([]);
 	useEffect(() => {

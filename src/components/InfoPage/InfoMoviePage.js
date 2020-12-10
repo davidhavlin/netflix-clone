@@ -27,7 +27,6 @@ const InfoMoviePage = ({
 
 	useEffect(() => {
 		let scrollBefore = tHeight;
-		// setTHeight(null);
 		return () => {
 			window.scrollTo(0, scrollBefore);
 			setTHeight(scrollBefore);
