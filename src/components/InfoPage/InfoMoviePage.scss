@@ -11,6 +11,20 @@
 	// align-items: center;
 	will-change: scroll-position;
 
+	.modal-box.modal-out {
+		opacity: 1;
+		animation: modalOut 500ms forwards ease;
+	}
+	@keyframes modalOut {
+		from {
+			transform: scale(1);
+			opacity: 1;
+		}
+		to {
+			transform: scale(0.8);
+			opacity: 0;
+		}
+	}
 	.modal-box {
 		position: absolute;
 		background: #141414;
@@ -23,6 +37,21 @@
 		color: #fff;
 		border-radius: 6px;
 		overflow: hidden;
+		opacity: 0;
+		box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+		transform-origin: center top;
+		animation: modalIn 1s forwards ease;
+
+		@keyframes modalIn {
+			from {
+				opacity: 0;
+				transform: scale(0.8);
+			}
+			to {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
 
 		.box-poster {
 			position: relative;

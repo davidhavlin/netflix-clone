@@ -42,6 +42,7 @@ const ProviderApp = () => {
 			{showModal && (
 				<InfoMoviePage
 					selectedMovie={selectedMovie}
+					showModal={showModal}
 					setShowModal={setShowModal}
 					topHeight={top_height}
 				/>

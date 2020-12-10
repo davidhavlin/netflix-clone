@@ -1,15 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { MovieContext } from "../App/MovieContext";
+import { CSSTransition } from "react-transition-group";
+
 import "./InfoMoviePage.scss";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 const apiKey = process.env.REACT_APP_TMDB_KEY;
 
-const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
+const InfoMoviePage = ({
+	selectedMovie,
+	showModal,
+	setShowModal,
+	topHeight,
+}) => {
 	const { my_list, list_functions } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
 	const [tHeight, setTHeight] = topHeight;
 	const [myList, setMyList] = my_list;
+	const modalBox = useRef(null);
 
 	const [similiarMovies, setSimiliarMovies] = useState([]);
 
@@ -44,14 +52,18 @@ const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
 		fetch(url)
 			.then((res) => res.json())
 			.then((data) => {
-				setSimiliarMovies(data.results);
+				if (data.results) setSimiliarMovies(data.results);
 			});
 
 		getCast();
 	}, [selectedMovie]);
 
 	const handleClick = () => {
-		setShowModal(false);
+		modalBox.current.classList.add("modal-out");
+		setTimeout(() => {
+			modalBox.current.classList.remove("modal-out");
+			setShowModal(false);
+		}, 500);
 	};
 
 	const getYear = (string) => {
@@ -122,7 +134,7 @@ const InfoMoviePage = ({ selectedMovie, setShowModal, topHeight }) => {
 
 	return (
 		<div className="info-page-modal">
-			<main className="modal-box">
+			<main className="modal-box" ref={modalBox}>
 				<div
 					className="box-poster"
 					style={{
