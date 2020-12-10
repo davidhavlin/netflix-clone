@@ -1,0 +1,25 @@
+.movies-navigation {
+	position: absolute;
+	top: 0;
+	z-index: 100;
+	padding: 3rem;
+
+	.left-side {
+		display: flex;
+		align-items: center;
+
+		select {
+			font-size: 0.9em;
+			height: 2rem;
+			padding: 0rem 0.5rem;
+			margin-left: 2rem;
+			color: #fff;
+			background: #000;
+			border: 1px solid #fff;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}
