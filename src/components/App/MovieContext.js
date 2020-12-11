@@ -1,11 +1,12 @@
 import React, { useState, useEffect, createContext } from "react";
 import { debounce } from "lodash-es";
 
-const API_KEY = process.env.REACT_APP_TMDB_KEY;
-const top_shows_url = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`;
-const upcoming_movies_url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`;
-const now_playing_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
-const trending_daily_url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
+const tmdb_api = process.env.REACT_APP_TMDB_KEY;
+
+const top_shows_url = `https://api.themoviedb.org/3/tv/popular?api_key=${tmdb_api}&language=en-US&page=1`;
+const upcoming_movies_url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${tmdb_api}&language=en-US&page=1`;
+const now_playing_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${tmdb_api}&language=en-US&page=1`;
+const trending_daily_url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${tmdb_api}`;
 
 export const MovieContext = createContext();
 
@@ -19,7 +20,6 @@ export const MovieProvider = (props) => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
 	useEffect(() => {
-		// handleResizeEvent();
 		window.addEventListener("resize", debounce(handleResizeEvent, 300));
 
 		return () => {
@@ -100,7 +100,7 @@ export const MovieProvider = (props) => {
 	const [searchWord, setSearchWord] = useState("");
 	const searchMovies = async (word) => {
 		setSearchWord(word);
-		let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${word}&page=1&include_adult=false`;
+		let url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdb_api}&language=en-US&query=${word}&page=1&include_adult=false`;
 
 		let response = await fetch(url);
 		let data = await response.json();
@@ -113,7 +113,7 @@ export const MovieProvider = (props) => {
 
 	const [pageCount, setPageCount] = useState(2);
 	const searchMoreMovies = async () => {
-		let url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${searchWord}&page=${pageCount}&include_adult=false`;
+		let url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdb_api}&language=en-US&query=${searchWord}&page=${pageCount}&include_adult=false`;
 
 		let response = await fetch(url);
 		let data = await response.json();
