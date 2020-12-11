@@ -7,7 +7,7 @@ const genres_url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apik
 const MoviesNavigation = ({ genres, setGenres }) => {
 	const [allGenres, setAllGenres] = useState([]);
 
-	useEffect(() => {
+	const fetchGenres = () => {
 		fetch(genres_url)
 			.then((res) => res.json())
 			.then((data) => {
@@ -18,7 +18,9 @@ const MoviesNavigation = ({ genres, setGenres }) => {
 				});
 				setAllGenres(items);
 			});
-	}, []);
+	};
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(fetchGenres, []);
 
 	const handleChange = (e) => {
 		let id = +e.target.value;

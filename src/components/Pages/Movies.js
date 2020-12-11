@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { MovieContext } from "../App/MovieContext";
 import "./Movies.scss";
 import GenresContainer from "../Movies/GenresContainer";
@@ -16,6 +16,10 @@ const Movies = () => {
 		{ name: "Science Fiction", id: 878 },
 		{ name: "Mystery", id: 9648 },
 	]);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<section className="movies-page">

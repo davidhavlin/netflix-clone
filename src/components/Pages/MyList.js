@@ -5,7 +5,7 @@ import "./MyList.scss";
 
 const MyList = () => {
 	const { my_list } = useContext(MovieContext);
-	const [myList, setMyList] = my_list;
+	const [myList] = my_list;
 
 	useEffect(() => {
 		window.scrollTo(0, 0);

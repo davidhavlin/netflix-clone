@@ -8,14 +8,16 @@ const GenresContainer = ({ genre, myList, setMyList, setPickMovie }) => {
 
 	const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}`;
 
-	useEffect(() => {
+	const fetchMoviesByGenre = () => {
 		fetch(url)
 			.then((res) => res.json())
 			.then((data) => {
 				setMovies(data.results);
-				if (setPickMovie) setPickMovie(data.results[0]);
+				if (setPickMovie) setPickMovie(data.results[0]); // vyberie prvy film z vysledkov a da ho do randomMovie componentu
 			});
-	}, []);
+	};
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(fetchMoviesByGenre, []);
 
 	return (
 		<MovieCarousel

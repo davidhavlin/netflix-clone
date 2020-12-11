@@ -10,7 +10,7 @@ const imgurl = "https://image.tmdb.org/t/p/w1280";
 const MovieCarousel = ({ title, movies, myList, big }) => {
 	const { list_functions, window_width } = useContext(MovieContext);
 	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
-	const [windowWidth, setWindowWidth] = window_width;
+	const [windowWidth] = window_width;
 
 	const [myMovies, setMyMovies] = useState([]);
 	const carousel = useRef(null);
@@ -36,6 +36,7 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		setMyMovies(movies);
 		resizeCarousel(window.innerWidth);
 		setOldWidth(window.innerWidth);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [movies]);
 
 	useEffect(() => {
@@ -43,6 +44,7 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		if (howBigWidth(windowWidth) === howBigWidth(oldWidth)) return;
 		resizeCarousel(window.innerWidth);
 		setOldWidth(windowWidth); // a nastavi novy width
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [windowWidth]);
 
 	const howBigWidth = (width) => {
@@ -99,7 +101,7 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 				div.style.transform = `translateX(${-100 * counter}%)`;
 			}
 		}
-	}, [counter]);
+	}, [counter, numberOfMovies, itemsVisible, width_of_item]);
 
 	const handleTransitionEnd = (e) => {
 		if (e.target.id !== "carousel") return;

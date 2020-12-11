@@ -11,7 +11,7 @@ const ProviderApp = () => {
 		MovieContext
 	);
 	const [showVideo, setShowVideo] = show_video;
-	const [topHeight, setTopHeight] = top_height;
+	const [topHeight] = top_height;
 	const [showModal, setShowModal] = show_modal;
 	const [selectedMovie] = selected_movie;
 
@@ -27,6 +27,7 @@ const ProviderApp = () => {
 		} else {
 			elApp.current.classList.add("show-modal");
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showModal]);
 
 	useEffect(() => {

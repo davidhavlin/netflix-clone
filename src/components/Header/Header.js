@@ -6,8 +6,8 @@ import { MovieContext } from "../App/MovieContext";
 
 const Header = () => {
 	const { upcoming_movies, show_modal } = useContext(MovieContext);
-	const [upcomingMovies, setUpcomingMovies] = upcoming_movies;
-	const [showModal, setShowModal] = show_modal;
+	const [upcomingMovies] = upcoming_movies;
+	const [showModal] = show_modal;
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {

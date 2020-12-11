@@ -8,7 +8,7 @@ const imgurl = "https://image.tmdb.org/t/p/w500";
 
 const Notification = ({ movies, showProfile, setShowNotify }) => {
 	const { list_functions } = useContext(MovieContext);
-	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
+	const selectThisItem = list_functions[2];
 	const [visibleNotifications, setVisibleNotifications] = useState(true);
 	const [notifyVisited, setNotifyVisited] = useState(false);
 	const notify = useRef(null);

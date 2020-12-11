@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
+import { Link } from "react-router-dom";
 
 import "./Profile.scss";
 
@@ -53,27 +54,27 @@ const Profile = ({ showNotify, setShowProfile }) => {
 						<div className="kid-section">
 							<div className="kid-picture"></div>
 							<div className="profile-link">
-								<a className="kid-link" href="#">
+								<Link className="kid-link" to="/">
 									Kids
-								</a>
+								</Link>
 							</div>
 						</div>
 						<div className="profile-link manage">
-							<a href="#">Manage profile</a>
+							<Link to="/">Manage profile</Link>
 						</div>
 					</div>
 					<div className="profile-link kids">
-						<a href="#">Kids</a>
+						<Link to="/">Kids</Link>
 					</div>
 					<ul className="dropdown-bottom">
 						<li className="profile-link">
-							<a href="#">Account</a>
+							<Link to="/">Account</Link>
 						</li>
 						<li className="profile-link">
-							<a href="#">Help Center</a>
+							<Link to="/">Help Center</Link>
 						</li>
 						<li className="profile-link">
-							<a href="#">Sign Out of Netflix</a>
+							<Link to="/">Sign Out of Netflix</Link>
 						</li>
 					</ul>
 				</div>

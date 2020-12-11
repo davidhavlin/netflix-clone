@@ -8,7 +8,7 @@ const imgurl_small = "https://image.tmdb.org/t/p/w342";
 
 const MovieContainer = ({ movies, noItems }) => {
 	const { my_list, list_functions, window_width } = useContext(MovieContext);
-	const [windowWidth, setWindowWidth] = window_width;
+	const [windowWidth] = window_width;
 	const [addToMyList, removeFromMyList, selectThisItem] = list_functions;
 	const [myList] = my_list;
 	const container = useRef(null);

@@ -6,8 +6,8 @@ import "./SearchPage.scss";
 
 const SearchPage = () => {
 	const { searched_movies, search_functions } = useContext(MovieContext);
-	const [searchedMovies, setSearchedMovies] = searched_movies;
-	const [searchMovies, searchMoreMovies] = search_functions;
+	const [searchedMovies] = searched_movies;
+	const searchMoreMovies = search_functions[1];
 
 	useEffect(() => {
 		window.scrollTo(0, 0);

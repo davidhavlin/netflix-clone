@@ -10,13 +10,10 @@ import { debounce } from "lodash-es";
 import { MovieContext } from "../../App/MovieContext";
 
 import searchIcon from "./search-icon.svg";
-const api = process.env.REACT_APP_TMDB_KEY;
-// const url = `https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&query=NIECO&page=1&include_adult=false`
 
 const Search = () => {
-	const { searched_movies, search_functions } = useContext(MovieContext);
-	const [searchedMovies, setSearchedMovies] = searched_movies;
-	const [searchMovies, searchMoreMovies] = search_functions;
+	const { search_functions } = useContext(MovieContext);
+	const [searchMovies] = search_functions;
 	const [openedSearch, setopenedSearch] = useState(false);
 
 	const searchInput = useRef(null);
@@ -24,16 +21,14 @@ const Search = () => {
 
 	useEffect(() => {
 		document.addEventListener("click", clickListener);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const clickListener = useCallback(
-		(e) => {
-			if (!container.current.contains(e.target)) {
-				closeSearch && closeSearch();
-			}
-		},
-		[container.current]
-	);
+	const clickListener = useCallback((e) => {
+		if (!container.current.contains(e.target)) {
+			closeSearch && closeSearch();
+		}
+	}, []);
 	const closeSearch = () => {
 		setopenedSearch(false);
 		searchInput.current.value = "";
@@ -87,7 +82,6 @@ const Search = () => {
 							alt="logo"
 						/>
 						<div
-							className="clear-input-icon"
 							className={
 								openedSearch && searchInput.current.value
 									? "clear-input-icon"

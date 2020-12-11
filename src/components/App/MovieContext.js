@@ -46,14 +46,6 @@ export const MovieProvider = (props) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (!showVideo && showModal) {
-	// 		setTimeout(() => {
-	// 			window.scrollTo(0, 0);
-	// 		}, 0);
-	// 	}
-	// }, [showModal, showVideo]);
-
 	const [myList, setMyList] = useState([]);
 	useEffect(() => {
 		let stored = localStorage.getItem("myList");

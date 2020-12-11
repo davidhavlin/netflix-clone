@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import RandomMovie from "../Home/RandomMovie";
 import MovieCarousel from "../Home/MovieCarousel";
 import MovieCarouselDef from "../Home/MovieCarouselDef";
 import { MovieContext } from "../App/MovieContext";
 import "./Home.scss";
-import { debounce } from "lodash-es";
 
 const Home = () => {
 	const {
@@ -16,7 +15,7 @@ const Home = () => {
 	const [topMovies] = top_rated_movies;
 	const [topShows] = top_rated_shows;
 	const [nowPlaying] = now_playing;
-	const [myList, setMyList] = my_list;
+	const [myList] = my_list;
 
 	const pickOneMovie = (movies) => {
 		return movies.find((movie) => movie.vote_average > 5);
@@ -30,21 +29,18 @@ const Home = () => {
 					title="Netflix Originals"
 					movies={topShows}
 					myList={myList}
-					// setMyList={setMyList}
 					big={true}
 				/>
 				<MovieCarousel
 					title="Trending Now"
 					movies={topMovies}
 					myList={myList}
-					setMyList={setMyList}
 					big={false}
 				/>
 				<MovieCarousel
 					title="New"
 					movies={nowPlaying}
 					myList={myList}
-					setMyList={setMyList}
 					big={false}
 				/>
 
@@ -52,7 +48,6 @@ const Home = () => {
 					title="My List"
 					movies={myList}
 					myList={myList}
-					setMyList={setMyList}
 					big={false}
 				/>
 			</section>
