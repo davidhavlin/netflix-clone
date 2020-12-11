@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import RandomMovie from "../Home/RandomMovie";
 import MovieCarousel from "../Home/MovieCarousel";
+import MovieCarouselDef from "../Home/MovieCarouselDef";
 import { MovieContext } from "../App/MovieContext";
 import "./Home.scss";
 import { debounce } from "lodash-es";
@@ -46,7 +47,8 @@ const Home = () => {
 					setMyList={setMyList}
 					big={false}
 				/>
-				<MovieCarousel
+
+				<MovieCarouselDef
 					title="My List"
 					movies={myList}
 					myList={myList}

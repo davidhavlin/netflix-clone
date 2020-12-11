@@ -62,6 +62,7 @@
 		white-space: nowrap;
 		transition: transform 0.6s ease;
 		height: 400px;
+		will-change: transform;
 
 		.no-content {
 			display: grid;

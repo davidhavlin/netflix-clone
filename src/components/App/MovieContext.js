@@ -16,10 +16,10 @@ export const MovieProvider = (props) => {
 	const [searchedMovies, setSearchedMovies] = useState([]);
 	const [topHeight, setTopHeight] = useState(0);
 
-	const [windowWidth, setWindowWidth] = useState(null);
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
 	useEffect(() => {
-		handleResizeEvent();
+		// handleResizeEvent();
 		window.addEventListener("resize", debounce(handleResizeEvent, 300));
 
 		return () => {
@@ -31,8 +31,7 @@ export const MovieProvider = (props) => {
 	}, []);
 
 	const handleResizeEvent = () => {
-		let newWindowWidth = window.innerWidth;
-		setWindowWidth(newWindowWidth);
+		setWindowWidth(window.innerWidth);
 	};
 
 	const selectThisItem = (movie, type) => {
