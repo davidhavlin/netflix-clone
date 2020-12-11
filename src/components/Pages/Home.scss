@@ -1,15 +1,33 @@
+@mixin descending-z-index($count: 20) {
+	.movies-section {
+		$target: 0;
+		$index: $count;
+		@while $index > 0 {
+			&:nth-child(#{$target}) {
+				z-index: #{$index};
+			}
+			$target: $target + 1;
+			$index: $index - 1;
+		}
+	}
+}
+
 .carousel-section {
 	width: 100%;
 	padding-top: 0;
 	margin-top: -8em;
 	position: relative;
 	z-index: 1;
-	.movies-section:nth-child(3) {
-		z-index: -1;
-	}
+	// @include zindex;
+	// .movies-section:nth-child(3) {
+	// 	z-index: -1;
+	// }
+	@include descending-z-index;
+
 	.movies-section {
 		position: relative;
 		padding: 0 3rem;
+		z-index: 1;
 	}
 	.movies-section.small-version {
 		.carousel {
