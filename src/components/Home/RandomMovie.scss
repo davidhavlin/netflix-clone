@@ -2,10 +2,11 @@
 	position: relative;
 	height: 100vh;
 	background-size: cover;
+	background-position: center;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 3rem;
+	padding: 3em;
 
 	&::after {
 		content: "";
@@ -24,14 +25,14 @@
 	}
 
 	.movie-left-content {
-		width: 600px;
+		max-width: 37.5rem;
 		position: relative;
 		color: #fff;
 		z-index: 1;
 	}
 
 	.movie-title {
-		font-size: 5em;
+		font-size: 4em;
 		margin: 0;
 		width: 700px;
 	}
@@ -84,5 +85,35 @@
 		color: #fff;
 		right: 0;
 		bottom: 25%;
+	}
+}
+
+@media (max-width: 700px) {
+	.highlight-movie {
+		padding: 2em;
+		.movie-left-content {
+			max-width: 100%;
+		}
+
+		.movie-title {
+			font-size: 3.5em;
+			margin: 0;
+			width: 100%;
+		}
+	}
+}
+@media (max-width: 500px) {
+	.highlight-movie {
+		height: 80vh;
+
+		.movie-overview {
+			font-size: 1em;
+		}
+		.movie-buttons {
+			button {
+				padding: 0.5rem 0.7rem;
+				font-size: 1em;
+			}
+		}
 	}
 }

@@ -2,19 +2,38 @@ import React from "react";
 import Netflix from "./Netflix.svg";
 import { Link, NavLink } from "react-router-dom";
 
-const MainNavigation = ({ windowWidth }) => {
+const MainNavigation = () => {
+	const handleClick = (e) => {
+		// e.currentTarget.style.opacity = 0;
+		// e.currentTarget.style.pointerEvents = "none";
+	};
+
+	const handleFocus = (e) => {
+		console.log("focus");
+		// document.getElementById("dropdown").style.opacity = 1;
+		// document.getElementById("dropdown").style.pointerEvents = "initial";
+	};
+
 	return (
 		<ul className="main-navigation">
-			<li>
+			<li id="netfliks" tabIndex="0">
 				<Link to="/" className="logo">
 					<img src={Netflix} className="netflix-logo" alt="logo" />
 				</Link>
 			</li>
-			{/* {windowWidth < 600 ? <MobileNav /> : } */}
-			<button className="browse-link">
+
+			<button
+				className="browse-link"
+				onFocus={handleFocus}
+				onBlur={handleFocus}
+			>
 				Browse
 				<div className="browse-arrow"></div>
-				<div className="browse-dropdown">
+				<div
+					id="dropdown"
+					className="browse-dropdown"
+					onClick={handleClick}
+				>
 					<NavLink
 						className="browse-nav-link"
 						exact
@@ -41,6 +60,7 @@ const MainNavigation = ({ windowWidth }) => {
 					</NavLink>
 				</div>
 			</button>
+
 			<li className="link-container">
 				<NavLink
 					className="nav-link"

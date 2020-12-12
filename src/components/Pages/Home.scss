@@ -130,6 +130,7 @@
 			background-size: cover;
 			background-position: center;
 			transition: transform 1s ease;
+			outline: none;
 
 			.hovered-show {
 				position: absolute;
@@ -143,6 +144,7 @@
 				padding: 0.5rem;
 				opacity: 0;
 				transition: opacity 1s ease;
+				pointer-events: none;
 				cursor: pointer;
 
 				&::after {
@@ -153,6 +155,7 @@
 					width: 100%;
 					height: 100%;
 					background: rgba(0, 0, 0, 0.2);
+					pointer-events: none;
 					z-index: 0;
 				}
 
@@ -259,12 +262,15 @@
 				}
 			}
 
-			&:hover {
+			&:hover,
+			&:focus {
 				transform: scale(1.2);
 				z-index: 100;
+				// pointer-events: none;
 
 				.hovered-show {
 					// display: block;
+					pointer-events: initial;
 					opacity: 1;
 				}
 			}
@@ -275,7 +281,8 @@
 			overflow: visible;
 			transition: transform 0.4s ease;
 
-			&:hover {
+			&:hover,
+			&:focus {
 				transform: scale(1.2) translateY(-41px);
 
 				.content-hovered {
@@ -370,8 +377,38 @@
 		width: 33.3%;
 	}
 }
+
+@media (max-width: 700px) {
+	.carousel-section .next-arrow,
+	.carousel-section .prev-arrow {
+		width: 2rem;
+	}
+	.carousel-section .movies-section {
+		padding: 0 2rem;
+	}
+	.movies-section .counter .cube {
+		right: 2rem;
+	}
+}
+
 @media (max-width: 600px) {
 	.carousel-section .carousel .slide-item {
 		width: 50%;
+	}
+}
+
+@media (max-width: 500px) {
+	.movies-section .counter {
+		top: 1.8rem;
+	}
+	.movies-section .counter .cube {
+		width: 15px;
+		height: 2px;
+	}
+
+	.carousel-section .carousel,
+	.carousel-section .next-arrow,
+	.carousel-section .prev-arrow {
+		height: 300px;
 	}
 }

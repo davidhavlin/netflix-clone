@@ -211,6 +211,16 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 	};
 
 	const handleClick = (e, movie) => {
+		if (e.target.type === "submit") return;
+		if (e.type === "touchend") {
+			e.preventDefault(); // aby sa nespustal nasledny click event
+		}
+		if (e.type === "touchstart") {
+			// aby na mobile neotvaralo hned yt ale len focuslo film
+			e.target.focus();
+			return;
+		}
+		console.log(e.target.type);
 		if (e.target.classList.contains("hovered-show")) {
 			selectThisItem(movie, "video");
 		}
@@ -238,8 +248,15 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 							return (
 								// prettier-ignore
 								<div className={firstOrLastItem(index)} key={movie.id} >
-									<div className="movie" style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}}>
-										<div className="hovered-show" onClick={(e)=>{handleClick(e, movie);}} style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
+                                    <div className="movie" tabIndex='0' style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}} 
+                                    onTouchStart={(e)=>{handleClick(e, movie)}} onTouchEnd={(e)=>{handleClick(e, movie)}} onClick={(e)=>{handleClick(e, movie)}}
+                                    >
+                                        <div className="hovered-show"  
+                                        // onTouchStart={handleClick} 
+                                        // onTouchEnd={handleClick}
+                                        // onClick={(e)=>{handleClick(e, movie);}}
+                                         style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}
+                                         >
 											<div className="content-hovered">
 												<div className="content">
 													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectThisItem={selectThisItem} />

@@ -16,7 +16,7 @@
 		height: 4rem;
 		display: flex;
 		justify-content: space-between;
-		padding: 0 3em;
+		padding: 0 3rem;
 		transition: background-color 0.7s ease-in-out;
 	}
 	.sticky-nav {
@@ -59,11 +59,14 @@
 
 		&:focus {
 			outline: none;
+			.browse-dropdown {
+				opacity: 1;
+				pointer-events: initial;
+			}
 		}
 
 		&:hover {
 			.browse-dropdown {
-				// display: block;
 				opacity: 1;
 				pointer-events: initial;
 			}
@@ -145,6 +148,10 @@
 @media (max-width: 700px) {
 	.navigation-header {
 		font-size: 1.75vw;
+
+		nav {
+			padding: 0 2rem;
+		}
 	}
 }
 
