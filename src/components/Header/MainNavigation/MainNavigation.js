@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Netflix from "./Netflix.svg";
 import { Link, NavLink } from "react-router-dom";
 
 const MainNavigation = () => {
+	const [dropDown, setDropDown] = useState(false);
+
 	const handleClick = (e) => {
-		// e.currentTarget.style.opacity = 0;
-		// e.currentTarget.style.pointerEvents = "none";
+		if (dropDown) {
+			setDropDown(false);
+		} else {
+			setDropDown(true);
+		}
 	};
 
-	const handleFocus = (e) => {
-		console.log("focus");
-		// document.getElementById("dropdown").style.opacity = 1;
-		// document.getElementById("dropdown").style.pointerEvents = "initial";
-	};
+	// const handleFocus = () => {
+	// 	dropdown.current.classList.add("dropdown-show");
+	// };
 
 	return (
 		<ul className="main-navigation">
@@ -24,15 +27,23 @@ const MainNavigation = () => {
 
 			<button
 				className="browse-link"
-				onFocus={handleFocus}
-				onBlur={handleFocus}
+				// onFocus={handleFocus}
+				// onBlur={handleFocus}
+				onClick={handleClick}
+				// onBlur={() => {
+				// 	handleBlur();
+				// }}
 			>
 				Browse
 				<div className="browse-arrow"></div>
 				<div
-					id="dropdown"
-					className="browse-dropdown"
-					onClick={handleClick}
+					// className="browse-dropdown"
+					className={
+						dropDown
+							? "browse-dropdown dropdown-show"
+							: "browse-dropdown"
+					}
+					// onClick={handleClick}
 				>
 					<NavLink
 						className="browse-nav-link"
