@@ -2,7 +2,7 @@ import React from "react";
 import Netflix from "./Netflix.svg";
 import { Link, NavLink } from "react-router-dom";
 
-const MainNavigation = () => {
+const MainNavigation = ({ windowWidth }) => {
 	return (
 		<ul className="main-navigation">
 			<li>
@@ -10,7 +10,38 @@ const MainNavigation = () => {
 					<img src={Netflix} className="netflix-logo" alt="logo" />
 				</Link>
 			</li>
-			<li>
+			{/* {windowWidth < 600 ? <MobileNav /> : } */}
+			<button className="browse-link">
+				Browse
+				<div className="browse-arrow"></div>
+				<div className="browse-dropdown">
+					<NavLink
+						className="browse-nav-link"
+						exact
+						to="/"
+						activeClassName="active-link"
+					>
+						Home
+					</NavLink>
+					<NavLink
+						className="browse-nav-link"
+						exact
+						to="/movies"
+						activeClassName="active-link"
+					>
+						Movies
+					</NavLink>
+					<NavLink
+						className="browse-nav-link"
+						exact
+						to="/mylist"
+						activeClassName="active-link"
+					>
+						My List
+					</NavLink>
+				</div>
+			</button>
+			<li className="link-container">
 				<NavLink
 					className="nav-link"
 					exact
@@ -20,7 +51,7 @@ const MainNavigation = () => {
 					Home
 				</NavLink>
 			</li>
-			<li>
+			<li className="link-container">
 				<NavLink
 					className="nav-link"
 					exact
@@ -30,7 +61,7 @@ const MainNavigation = () => {
 					Movies
 				</NavLink>
 			</li>
-			<li>
+			<li className="link-container">
 				<NavLink
 					className="nav-link"
 					exact
