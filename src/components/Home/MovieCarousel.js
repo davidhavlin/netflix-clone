@@ -210,17 +210,22 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	const handleClick = (e, movie) => {
+	const handleTouch = (e, movie) => {
 		if (e.target.type === "submit") return;
 		if (e.type === "touchend") {
+			console.log("touchend");
+
 			e.preventDefault(); // aby sa nespustal nasledny click event
 		}
 		if (e.type === "touchstart") {
+			document.activeElement.blur();
 			// aby na mobile neotvaralo hned yt ale len focuslo film
+			console.log("touchstart");
 			e.target.focus();
 			return;
 		}
-		console.log(e.target.type);
+	};
+	const handleClick = (e, movie) => {
 		if (e.target.classList.contains("hovered-show")) {
 			selectThisItem(movie, "video");
 		}
@@ -249,7 +254,7 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 								// prettier-ignore
 								<div className={firstOrLastItem(index)} key={movie.id} >
                                     <div className="movie" tabIndex='0' style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}} 
-                                    onTouchStart={(e)=>{handleClick(e, movie)}} onTouchEnd={(e)=>{handleClick(e, movie)}} onClick={(e)=>{handleClick(e, movie)}}
+                                    onTouchStart={(e)=>{handleTouch(e, movie)}} onTouchEnd={(e)=>{handleTouch(e, movie)}} onClick={(e)=>{handleClick(e, movie)}}
                                     >
                                         <div className="hovered-show"  
                                         // onTouchStart={handleClick} 

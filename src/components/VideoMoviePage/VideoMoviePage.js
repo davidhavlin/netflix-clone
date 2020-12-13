@@ -12,6 +12,20 @@ const VideoMoviePage = ({ selectedMovie, setShowVideo }) => {
 		setShowVideo(false);
 	};
 
+	const handleKeyDown = (e) => {
+		if (e.key === "Escape") {
+			setShowVideo(false);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, []);
+
 	useEffect(() => {
 		if (!selectedMovie) return;
 		setLoading(true);
@@ -48,8 +62,12 @@ const VideoMoviePage = ({ selectedMovie, setShowVideo }) => {
 					No video for "{selectedMovie.title || selectedMovie.name}"
 				</div>
 			)}
-			<div className="close-video" onClick={handleClick}>
-				<i className="far fa-times-circle"></i>
+			<div className="close-video">
+				<i
+					onClick={handleClick}
+					onTouchStart={handleClick}
+					className="far fa-times-circle"
+				></i>
 			</div>
 		</div>
 	);

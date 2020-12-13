@@ -18,10 +18,6 @@
 	margin-top: -8em;
 	position: relative;
 	z-index: 1;
-	// @include zindex;
-	// .movies-section:nth-child(3) {
-	// 	z-index: -1;
-	// }
 	@include descending-z-index;
 
 	.movies-section {
@@ -129,7 +125,7 @@
 			border-radius: 5px;
 			background-size: cover;
 			background-position: center;
-			transition: transform 1s ease;
+			transition: transform 0.5s ease;
 			outline: none;
 
 			.hovered-show {
@@ -143,7 +139,7 @@
 				border-radius: 5px;
 				padding: 0.5rem;
 				opacity: 0;
-				transition: opacity 1s ease;
+				transition: opacity 0.5s ease;
 				pointer-events: none;
 				cursor: pointer;
 
@@ -173,6 +169,7 @@
 							display: flex;
 						}
 					}
+
 					button {
 						position: relative;
 						font-size: 1.3em;
@@ -257,6 +254,29 @@
 						span {
 							color: #fff;
 							font-weight: normal;
+						}
+					}
+
+					@media (max-width: 500px) {
+						button {
+							font-size: 0.8em;
+							width: 2.2em;
+							height: 2.2em;
+							margin-right: 0.3rem;
+						}
+						.text-section {
+							white-space: pre-wrap;
+							p {
+								font-size: 0.6em;
+							}
+							.age-res {
+								font-size: 0.9em;
+								margin: 0 0.3rem;
+							}
+							span {
+								color: #fff;
+								font-weight: normal;
+							}
 						}
 					}
 				}
@@ -410,5 +430,9 @@
 	.carousel-section .next-arrow,
 	.carousel-section .prev-arrow {
 		height: 300px;
+	}
+
+	.carousel-section .carousel .movie .hovered-show {
+		padding: 0.3rem;
 	}
 }
