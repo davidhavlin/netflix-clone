@@ -31,7 +31,7 @@ const Profile = ({ showNotify, setShowProfile }) => {
 	const hideMenu = () => {
 		timeout = setTimeout(() => {
 			setVisibleMenu(false);
-		}, 300);
+		}, 150);
 	};
 
 	return (

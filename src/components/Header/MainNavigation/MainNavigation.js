@@ -5,21 +5,9 @@ import { Link, NavLink } from "react-router-dom";
 const MainNavigation = () => {
 	const [dropDown, setDropDown] = useState(false);
 
-	const handleClick = (e) => {
-		if (dropDown) {
-			setDropDown(false);
-		} else {
-			setDropDown(true);
-		}
-	};
-
-	// const handleFocus = () => {
-	// 	dropdown.current.classList.add("dropdown-show");
-	// };
-
 	return (
 		<ul className="main-navigation">
-			<li id="netfliks" tabIndex="0">
+			<li>
 				<Link to="/" className="logo">
 					<img src={Netflix} className="netflix-logo" alt="logo" />
 				</Link>
@@ -27,23 +15,27 @@ const MainNavigation = () => {
 
 			<button
 				className="browse-link"
-				// onFocus={handleFocus}
-				// onBlur={handleFocus}
-				onClick={handleClick}
-				// onBlur={() => {
-				// 	handleBlur();
-				// }}
+				onMouseEnter={() => {
+					setDropDown(true);
+				}}
+				onMouseLeave={() => {
+					setDropDown(false);
+				}}
+				onTouchStart={() => {
+					setDropDown(true);
+				}}
 			>
 				Browse
 				<div className="browse-arrow"></div>
 				<div
-					// className="browse-dropdown"
 					className={
 						dropDown
 							? "browse-dropdown dropdown-show"
 							: "browse-dropdown"
 					}
-					// onClick={handleClick}
+					onClick={() => {
+						setDropDown(false);
+					}}
 				>
 					<NavLink
 						className="browse-nav-link"

@@ -37,7 +37,7 @@ const Notification = ({ movies, showProfile, setShowNotify }) => {
 	const hideNotifications = () => {
 		timeout = setTimeout(() => {
 			setVisibleNotifications(false);
-		}, 300);
+		}, 150);
 	};
 
 	const shorterOverview = (string) => {
@@ -55,9 +55,11 @@ const Notification = ({ movies, showProfile, setShowNotify }) => {
 			}}
 		>
 			<img className="bell" src={notificationBell} alt="notification" />
-			{!notifyVisited && (
-				<div className="notifications-count">{movies.length}</div>
-			)}
+			<div className="count-container">
+				{!notifyVisited && (
+					<div className="notifications-count">{movies.length}</div>
+				)}
+			</div>
 
 			<CSSTransition
 				classNames="notify"

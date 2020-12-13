@@ -6,13 +6,18 @@
 		width: 1.25em;
 		position: relative;
 	}
+	.count-container {
+		width: 1.2rem;
+		height: 100%;
+		position: absolute;
+	}
 	.notifications-count {
 		font-size: 0.7em;
 		font-weight: bold;
 		color: #fff;
 		position: absolute;
-		top: 15px;
-		right: -3px;
+		top: 14px;
+		right: -6px;
 		background: red;
 		border-radius: 50%;
 		display: flex;
@@ -21,6 +26,7 @@
 		width: 1.5em;
 		height: 1.5em;
 	}
+
 	.notification-dropdown {
 		border-top: 2px solid #fff;
 		position: absolute;
@@ -104,7 +110,13 @@
 		}
 	}
 }
-
+@media (max-width: 800px) {
+	.notification .notifications-count {
+		font-size: 0.8em;
+		top: 18px;
+		right: -2px;
+	}
+}
 @media (max-width: 540px) {
 	.notification {
 		position: unset;
