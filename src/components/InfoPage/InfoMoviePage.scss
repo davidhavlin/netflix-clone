@@ -31,10 +31,9 @@
 		z-index: 1;
 		margin-bottom: 2em;
 		top: 2em;
-		width: 850px;
+		max-width: 850px;
 		min-height: 1000px;
 		opacity: 1;
-		min-width: 850px;
 		color: #fff;
 		border-radius: 6px;
 		overflow: hidden;
@@ -60,6 +59,7 @@
 			height: 500px;
 			background: #1b1b1b;
 			background-size: cover;
+			background-position: center;
 			padding: 2rem;
 
 			&::after {
@@ -353,5 +353,82 @@
 		height: 100%;
 		width: 100%;
 		z-index: 0;
+	}
+}
+
+@media (max-width: 700px) {
+	.info-page-modal {
+		.movies-container {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+}
+@media (max-width: 430px) {
+	.info-page-modal {
+		.movies-container {
+			grid-template-columns: 1fr;
+		}
+	}
+	.info-page-modal .modal-box .box-poster .poster-content .poster-title {
+		font-size: 2em;
+		margin-bottom: 0.7rem;
+	}
+	.info-page-modal
+		.modal-box
+		.box-poster
+		.poster-content
+		.poster-buttons
+		.btn-play {
+		padding: 0.6rem 1rem;
+		font-size: 1em;
+		margin-right: 0.5rem;
+	}
+	.info-page-modal
+		.modal-box
+		.box-poster
+		.poster-content
+		.poster-buttons
+		.btn-add,
+	.info-page-modal
+		.modal-box
+		.box-poster
+		.poster-content
+		.poster-buttons
+		.btn-info {
+		font-size: 1.1em;
+		width: 40px;
+		height: 40px;
+		margin-right: 0.5rem;
+	}
+	.info-page-modal .modal-box .box-poster .exit-btn {
+		font-size: 3em;
+	}
+	.info-page-modal .modal-box .box-content .text-content .info {
+		font-size: 1em;
+		margin: 1px 0 1.5rem 0;
+	}
+	.info-page-modal .modal-box .box-content .text-content .overview {
+		line-height: 1.5rem;
+		font-size: 0.9em;
+	}
+	.info-page-modal .modal-box .box-content .text-content {
+		grid-template-columns: 2fr 1fr;
+		gap: 0.7rem;
+	}
+
+	.info-page-modal .movies-container .sim-movie .text {
+		padding: 0.7rem;
+	}
+	.info-page-modal .movies-container .sim-movie .text p {
+		font-size: 0.9em;
+	}
+	.info-page-modal .movies-container .sim-movie .text .info {
+		font-size: 0.8em;
+		margin: 0 0 1.1rem 0;
+	}
+}
+@media (max-width: 360px) {
+	.info-page-modal .modal-box .box-content .text-content {
+		grid-template-columns: 1fr;
 	}
 }
