@@ -62,11 +62,16 @@ const Search = () => {
 	return (
 		<Route
 			render={({ history }) => (
-				<div
-					className={openedSearch ? "search search-open" : "search"}
-					onClick={clickOnSearch}
-				>
-					<div ref={container} className="search-container">
+				<div className="search" onClick={clickOnSearch}>
+					<div
+						ref={container}
+						className={
+							openedSearch
+								? "search-container search-open"
+								: "search-container"
+						}
+					>
+						{/* <div className=""></div> */}
 						<input
 							ref={searchInput}
 							type="text"

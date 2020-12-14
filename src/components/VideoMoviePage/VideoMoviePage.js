@@ -42,13 +42,16 @@ const VideoMoviePage = ({ selectedMovie, setShowVideo }) => {
 	}, [selectedMovie]);
 
 	const handleClick = () => {
+		// console.log(e.target);
 		setShowVideo(false);
 	};
 
 	return (
 		<div className="video-page">
 			<div className="close-video">
-				<i onClick={handleClick} className="far fa-times-circle"></i>
+				<div onClick={handleClick} className="close-btn">
+					<i className="far fa-times-circle"></i>
+				</div>
 				<div className="close-bg"></div>
 			</div>
 			{ytKey && (

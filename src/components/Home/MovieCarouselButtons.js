@@ -19,6 +19,7 @@ const MovieCarouselButtons = ({
 					className="btn-play"
 					onClick={() => {
 						selectThisItem(movie, "video");
+						setHoveredShow(false);
 					}}
 				>
 					<i className="fas fa-play"></i>

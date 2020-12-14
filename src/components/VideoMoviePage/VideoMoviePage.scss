@@ -40,15 +40,17 @@
 			background: transparent;
 			transition: background 0.5s ease;
 		}
-		i:hover ~ .close-bg,
-		i:focus ~ .close-bg {
-			background: rgba(0, 0, 0, 0.741);
-		}
-		i {
+
+		.close-btn {
 			position: absolute;
 			pointer-events: initial;
 			z-index: 1000;
 			cursor: pointer;
+
+			&:hover ~ .close-bg,
+			&:focus ~ .close-bg {
+				background: rgba(0, 0, 0, 0.741);
+			}
 		}
 	}
 
