@@ -19,7 +19,7 @@ const MovieCarouselButtons = ({
 					className="btn-play"
 					onClick={() => {
 						selectThisItem(movie, "video");
-						setHoveredShow(false);
+						// setHoveredShow(false);
 					}}
 				>
 					<i className="fas fa-play"></i>
@@ -30,7 +30,7 @@ const MovieCarouselButtons = ({
 						tabIndex="0"
 						onClick={(e) => {
 							removeFromMyList(movie);
-							setHoveredShow(false);
+							// setHoveredShow(false);
 						}}
 					>
 						<span className="icon-tooltip">
@@ -55,6 +55,7 @@ const MovieCarouselButtons = ({
 				className="btn-info"
 				onClick={() => {
 					selectThisItem(movie, "info");
+					setHoveredShow(false);
 				}}
 			>
 				<span className="icon-tooltip">More Info</span>

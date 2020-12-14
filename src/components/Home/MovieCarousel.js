@@ -210,21 +210,6 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	// const handleTouch = (e, movie) => {
-	// 	if (e.target.type === "submit") return;
-	// 	if (e.type === "touchend") {
-	// 		console.log("touchend");
-
-	// 		e.preventDefault(); // aby sa nespustal nasledny click event
-	// 	}
-	// 	if (e.type === "touchstart") {
-	// 		document.activeElement.blur();
-	// 		// aby na mobile neotvaralo hned yt ale len focuslo film
-	// 		console.log("touchstart");
-	// 		e.target.focus();
-	// 		return;
-	// 	}
-	// };
 	const [hoveredShow, setHoveredShow] = useState(false);
 	const handleClick = (e, movie) => {
 		if (e.target.classList.contains("hovered-show") && hoveredShow) {
@@ -270,7 +255,7 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
                                          >
 											<div className="content-hovered">
 												<div className="content">
-													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectThisItem={selectThisItem} />
+													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectThisItem={selectThisItem} setHoveredShow={setHoveredShow} />
                                                     <MovieCarouselText movie={movie} />
 												</div>
 											</div>
