@@ -6,9 +6,13 @@
 	height: 100%;
 	background: rgba(0, 0, 0, 0.618);
 	z-index: 10000;
+	overflow: hidden;
 
 	.video-player {
-		position: relative;
+		border: 0;
+		position: absolute;
+		left: 0;
+		top: 0;
 		border: none;
 		width: 100%;
 		height: 100%;
@@ -23,18 +27,28 @@
 		display: flex;
 		justify-content: flex-end;
 		padding: 1rem;
-		cursor: pointer;
-		background: transparent;
 		width: 100%;
 		height: 100%;
-		transition: background 0.5s ease;
 		pointer-events: none;
 
-		&:hover {
+		.close-bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: transparent;
+			transition: background 0.5s ease;
+		}
+		i:hover ~ .close-bg,
+		i:focus ~ .close-bg {
 			background: rgba(0, 0, 0, 0.741);
 		}
 		i {
+			position: absolute;
 			pointer-events: initial;
+			z-index: 1000;
+			cursor: pointer;
 		}
 	}
 

@@ -74,6 +74,7 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		}
 	};
 	const resetCarousel = (items, itemWidth) => {
+		console.log(items, itemWidth);
 		carousel.current.style.transform = `translateX(${0}%)`;
 		setCounter(0);
 		setNextArrow(true);
@@ -86,6 +87,10 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 	useEffect(() => {
 		const div = carousel.current;
 
+		if (numberOfMovies < itemsVisible) {
+			div.style.transform = `translateX(${0}%)`;
+			return;
+		}
 		if (numberOfMovies % itemsVisible === 0) {
 			// ked ziadny film "nevycnieva" staci klasicky pridavat po 100
 			div.style.transform = `translateX(${-100 * counter}%)`;
