@@ -4,6 +4,7 @@ import MovieCarouselArrows from "./MovieCarouselArrows";
 import MovieCarouselButtons from "./MovieCarouselButtons";
 import MovieCarouselText from "./MovieCarouselText";
 import { MovieContext } from "../App/MovieContext";
+import { set } from "lodash-es";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
@@ -210,25 +211,34 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		return movies.length % itemsVisible !== 0 ? i !== 18 && i !== 19 : true;
 	};
 
-	const handleTouch = (e, movie) => {
-		if (e.target.type === "submit") return;
-		if (e.type === "touchend") {
-			console.log("touchend");
+	// const handleTouch = (e, movie) => {
+	// 	if (e.target.type === "submit") return;
+	// 	if (e.type === "touchend") {
+	// 		console.log("touchend");
 
-			e.preventDefault(); // aby sa nespustal nasledny click event
-		}
-		if (e.type === "touchstart") {
-			document.activeElement.blur();
-			// aby na mobile neotvaralo hned yt ale len focuslo film
-			console.log("touchstart");
-			e.target.focus();
-			return;
-		}
-	};
+	// 		e.preventDefault(); // aby sa nespustal nasledny click event
+	// 	}
+	// 	if (e.type === "touchstart") {
+	// 		document.activeElement.blur();
+	// 		// aby na mobile neotvaralo hned yt ale len focuslo film
+	// 		console.log("touchstart");
+	// 		e.target.focus();
+	// 		return;
+	// 	}
+	// };
+	const [hoveredShow, setHoveredShow] = useState(false);
 	const handleClick = (e, movie) => {
-		if (e.target.classList.contains("hovered-show")) {
+		if (e.target.classList.contains("hovered-show") && hoveredShow) {
 			selectThisItem(movie, "video");
 		}
+	};
+	const handleHover = (e) => {
+		setTimeout(() => {
+			setHoveredShow(true);
+		}, 200);
+	};
+	const handleHoverExit = () => {
+		setHoveredShow(false);
 	};
 
 	return (
@@ -253,13 +263,10 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 							return (
 								// prettier-ignore
 								<div className={firstOrLastItem(index)} key={movie.id} >
-                                    <div className="movie" tabIndex='0' style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}} 
-                                    onTouchStart={(e)=>{handleTouch(e, movie)}} onTouchEnd={(e)=>{handleTouch(e, movie)}} onClick={(e)=>{handleClick(e, movie)}}
+                                    <div className="movie"  style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}} 
+                                    onClick={(e)=>{handleClick(e, movie)}} onMouseEnter={handleHover} onMouseLeave={handleHoverExit}
                                     >
-                                        <div className="hovered-show"  
-                                        // onTouchStart={handleClick} 
-                                        // onTouchEnd={handleClick}
-                                        // onClick={(e)=>{handleClick(e, movie);}}
+                                        <div className="hovered-show" 
                                          style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}
                                          >
 											<div className="content-hovered">

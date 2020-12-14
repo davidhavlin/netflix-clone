@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import MovieCarouselButtons from "../Home/MovieCarouselButtons";
 import MovieCarouselText from "../Home/MovieCarouselText";
 import { MovieContext } from "../App/MovieContext";
@@ -40,10 +40,19 @@ const MovieContainer = ({ movies, noItems }) => {
 		}
 	};
 
+	const [hoveredShow, setHoveredShow] = useState(false);
 	const handleClick = (e, movie) => {
-		if (e.target.classList.contains("movie-item")) {
+		if (e.target.classList.contains("movie-item") && hoveredShow) {
 			selectThisItem(movie, "video");
 		}
+	};
+	const handleHover = () => {
+		setTimeout(() => {
+			setHoveredShow(true);
+		}, 200);
+	};
+	const handleHoverExit = () => {
+		setHoveredShow(false);
 	};
 
 	return (
@@ -55,6 +64,8 @@ const MovieContainer = ({ movies, noItems }) => {
 						onClick={(e) => {
 							handleClick(e, movie);
 						}}
+						onMouseEnter={handleHover}
+						onMouseLeave={handleHoverExit}
 						className="movie-item"
 						style={{
 							backgroundImage: `url(${
@@ -78,6 +89,7 @@ const MovieContainer = ({ movies, noItems }) => {
 										removeFromMyList={removeFromMyList}
 										addToMyList={addToMyList}
 										selectThisItem={selectThisItem}
+										setHoveredShow={setHoveredShow}
 									/>
 									<MovieCarouselText movie={movie} />
 								</div>

@@ -146,10 +146,19 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 		}
 	};
 
+	const [hoveredShow, setHoveredShow] = useState(false);
 	const handleClick = (e, movie) => {
-		if (e.target.classList.contains("hovered-show")) {
+		if (e.target.classList.contains("hovered-show") && hoveredShow) {
 			selectThisItem(movie, "video");
 		}
+	};
+	const handleHover = () => {
+		setTimeout(() => {
+			setHoveredShow(true);
+		}, 200);
+	};
+	const handleHoverExit = () => {
+		setHoveredShow(false);
 	};
 
 	return (
@@ -171,19 +180,55 @@ const MovieCarousel = ({ title, movies, myList, big }) => {
 				{myMovies.length !== 0 ? (
 					myMovies.map((movie, index) => {
 						return (
-							// prettier-ignore
-							<div className={firstOrLastItem(index)} key={movie.id} >
-									<div className="movie" style={{ backgroundImage: `url(${imgurl + movie.poster_path})`}}>
-										<div className="hovered-show" onClick={(e)=>{handleClick(e, movie);}} style={{ backgroundImage: `url(${ imgurl + movie.backdrop_path })`}}>
-											<div className="content-hovered">
-												<div className="content">
-													<MovieCarouselButtons movie={movie} myList={myList}	removeFromMyList={removeFromMyList}	addToMyList={addToMyList} selectThisItem={selectThisItem} />
-                                                    <MovieCarouselText movie={movie} />
-												</div>
+							<div
+								className={firstOrLastItem(index)}
+								key={movie.id}
+							>
+								<div
+									className="movie"
+									style={{
+										backgroundImage: `url(${
+											imgurl + movie.poster_path
+										})`,
+									}}
+									onMouseEnter={handleHover}
+									onMouseLeave={handleHoverExit}
+								>
+									<div
+										className="hovered-show"
+										onClick={(e) => {
+											handleClick(e, movie);
+										}}
+										style={{
+											backgroundImage: `url(${
+												imgurl + movie.backdrop_path
+											})`,
+										}}
+									>
+										<div className="content-hovered">
+											<div className="content">
+												<MovieCarouselButtons
+													movie={movie}
+													myList={myList}
+													removeFromMyList={
+														removeFromMyList
+													}
+													addToMyList={addToMyList}
+													selectThisItem={
+														selectThisItem
+													}
+													setHoveredShow={
+														setHoveredShow
+													}
+												/>
+												<MovieCarouselText
+													movie={movie}
+												/>
 											</div>
 										</div>
 									</div>
 								</div>
+							</div>
 						);
 					})
 				) : (

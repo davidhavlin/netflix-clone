@@ -6,14 +6,10 @@ const MovieCarouselButtons = ({
 	removeFromMyList,
 	addToMyList,
 	selectThisItem,
+	setHoveredShow,
 }) => {
 	const alreadyInMyList = (id) => {
 		return myList.find((item) => item.id === id) ? true : false;
-	};
-
-	const skuska = (e) => {
-		console.log("klikam", e.target);
-		e.target.blur();
 	};
 
 	return (
@@ -33,7 +29,7 @@ const MovieCarouselButtons = ({
 						tabIndex="0"
 						onClick={(e) => {
 							removeFromMyList(movie);
-							skuska(e);
+							setHoveredShow(false);
 						}}
 					>
 						<span className="icon-tooltip">
@@ -47,7 +43,6 @@ const MovieCarouselButtons = ({
 						tabIndex="0"
 						onClick={(e) => {
 							addToMyList(movie);
-							skuska(e);
 						}}
 					>
 						<span className="icon-tooltip">Add to My List</span>
