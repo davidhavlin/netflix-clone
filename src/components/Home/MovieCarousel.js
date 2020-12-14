@@ -4,7 +4,6 @@ import MovieCarouselArrows from "./MovieCarouselArrows";
 import MovieCarouselButtons from "./MovieCarouselButtons";
 import MovieCarouselText from "./MovieCarouselText";
 import { MovieContext } from "../App/MovieContext";
-import { set } from "lodash-es";
 
 const imgurl = "https://image.tmdb.org/t/p/w1280";
 
